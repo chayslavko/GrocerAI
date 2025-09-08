@@ -12,12 +12,29 @@ export const groceryItemsApi = {
     return apiService.get<GroceryItem>(`/groceryItems/${id}`);
   },
 
-  create: (item: Omit<GroceryItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<GroceryItem> => {
-    return apiService.post<GroceryItem>('/groceryItems', item);
+  create: (
+    item: Omit<GroceryItem, 'id' | 'createdAt' | 'updatedAt' | 'isPurchased'>,
+  ): Promise<GroceryItem> => {
+    const now = new Date().toISOString();
+    const itemWithTimestamps = {
+      ...item,
+      isPurchased: false,
+      createdAt: now,
+      updatedAt: now,
+    };
+    return apiService.post<GroceryItem>('/groceryItems', itemWithTimestamps);
   },
 
   update: (id: string, item: Partial<GroceryItem>): Promise<GroceryItem> => {
-    return apiService.put<GroceryItem>(`/groceryItems/${id}`, item);
+    const now = new Date().toISOString();
+    const itemWithUpdatedTimestamp = {
+      ...item,
+      updatedAt: now,
+    };
+    return apiService.patch<GroceryItem>(
+      `/groceryItems/${id}`,
+      itemWithUpdatedTimestamp,
+    );
   },
 
   delete: (id: string): Promise<void> => {
@@ -25,10 +42,14 @@ export const groceryItemsApi = {
   },
 
   search: (query: string): Promise<GroceryItem[]> => {
-    return apiService.get<GroceryItem[]>(`/groceryItems/search?q=${encodeURIComponent(query)}`);
+    return apiService.get<GroceryItem[]>(
+      `/groceryItems/search?q=${encodeURIComponent(query)}`,
+    );
   },
 
   getByCategory: (categoryId: string): Promise<GroceryItem[]> => {
-    return apiService.get<GroceryItem[]>(`/groceryItems?category=${categoryId}`);
+    return apiService.get<GroceryItem[]>(
+      `/groceryItems?category=${categoryId}`,
+    );
   },
 };

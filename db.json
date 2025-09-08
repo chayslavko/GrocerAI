@@ -1,64 +1,196 @@
 {
   "groceryItems": [
     {
-      "id": "1",
-      "name": "Organic Bananas",
-      "category": "Fruits",
-      "quantity": 6,
-      "unit": "pieces",
-      "isPurchased": false,
-      "priority": "medium",
-      "notes": "Get organic ones",
-      "createdAt": "2024-01-15T10:30:00Z",
-      "updatedAt": "2024-01-15T10:30:00Z"
-    },
-    {
-      "id": "2",
-      "name": "Whole Milk",
-      "category": "Dairy",
+      "id": "a15b",
+      "name": "Orange",
       "quantity": 1,
-      "unit": "gallon",
-      "isPurchased": false,
-      "priority": "high",
-      "notes": "2% fat",
-      "createdAt": "2024-01-15T10:35:00Z",
-      "updatedAt": "2024-01-15T10:35:00Z"
-    },
-    {
-      "id": "3",
-      "name": "Whole Wheat Bread",
-      "category": "Bakery",
-      "quantity": 2,
-      "unit": "loaves",
       "isPurchased": true,
-      "priority": "low",
-      "notes": "Multigrain preferred",
-      "createdAt": "2024-01-15T10:40:00Z",
-      "updatedAt": "2024-01-15T11:00:00Z"
+      "createdAt": "2025-09-08T10:16:30.465Z",
+      "updatedAt": "2025-09-08T10:41:23.913Z"
     },
     {
-      "id": "4",
-      "name": "Free Range Eggs",
-      "category": "Dairy",
-      "quantity": 12,
-      "unit": "pieces",
-      "isPurchased": false,
-      "priority": "high",
-      "notes": "Large size",
-      "createdAt": "2024-01-15T10:45:00Z",
-      "updatedAt": "2024-01-15T10:45:00Z"
-    },
-    {
-      "id": "5",
-      "name": "Organic Spinach",
-      "category": "Vegetables",
+      "id": "e3e0",
+      "name": "Ds",
       "quantity": 1,
-      "unit": "bag",
       "isPurchased": false,
-      "priority": "medium",
-      "notes": "Baby spinach",
-      "createdAt": "2024-01-15T10:50:00Z",
-      "updatedAt": "2024-01-15T10:50:00Z"
+      "createdAt": "2025-09-08T10:27:14.268Z",
+      "updatedAt": "2025-09-08T10:27:14.268Z"
+    },
+    {
+      "id": "8444",
+      "name": "Sdfdf",
+      "quantity": 1,
+      "isPurchased": true,
+      "createdAt": "2025-09-08T10:27:24.437Z",
+      "updatedAt": "2025-09-08T10:27:59.937Z"
+    },
+    {
+      "id": "b2c3",
+      "name": "Fresh Milk",
+      "quantity": 2,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T08:30:00.000Z",
+      "updatedAt": "2025-09-08T10:47:01.951Z"
+    },
+    {
+      "id": "d4e5",
+      "name": "Whole Wheat Bread",
+      "quantity": 1,
+      "isPurchased": true,
+      "createdAt": "2025-09-08T08:35:00.000Z",
+      "updatedAt": "2025-09-08T09:15:00.000Z"
+    },
+    {
+      "id": "f6g7",
+      "name": "Organic Eggs",
+      "quantity": 12,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T08:40:00.000Z",
+      "updatedAt": "2025-09-08T08:40:00.000Z"
+    },
+    {
+      "id": "h8i9",
+      "name": "Bananas",
+      "quantity": 6,
+      "isPurchased": true,
+      "createdAt": "2025-09-08T08:45:00.000Z",
+      "updatedAt": "2025-09-08T09:20:00.000Z"
+    },
+    {
+      "id": "j0k1",
+      "name": "Chicken Breast",
+      "quantity": 2,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T08:50:00.000Z",
+      "updatedAt": "2025-09-08T08:50:00.000Z"
+    },
+    {
+      "id": "l2m3",
+      "name": "Greek Yogurt",
+      "quantity": 4,
+      "isPurchased": true,
+      "createdAt": "2025-09-08T08:55:00.000Z",
+      "updatedAt": "2025-09-08T09:25:00.000Z"
+    },
+    {
+      "id": "n4o5",
+      "name": "Avocados",
+      "quantity": 4,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T09:00:00.000Z",
+      "updatedAt": "2025-09-08T09:00:00.000Z"
+    },
+    {
+      "id": "p6q7",
+      "name": "Brown Rice",
+      "quantity": 1,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T09:05:00.000Z",
+      "updatedAt": "2025-09-08T09:05:00.000Z"
+    },
+    {
+      "id": "r8s9",
+      "name": "Frozen Berries",
+      "quantity": 1,
+      "isPurchased": true,
+      "createdAt": "2025-09-08T09:10:00.000Z",
+      "updatedAt": "2025-09-08T09:30:00.000Z"
+    },
+    {
+      "id": "t0u1",
+      "name": "Olive Oil",
+      "quantity": 1,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T09:15:00.000Z",
+      "updatedAt": "2025-09-08T09:15:00.000Z"
+    },
+    {
+      "id": "v2w3",
+      "name": "Bell Peppers",
+      "quantity": 3,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T09:20:00.000Z",
+      "updatedAt": "2025-09-08T09:20:00.000Z"
+    },
+    {
+      "id": "x4y5",
+      "name": "Almonds",
+      "quantity": 1,
+      "isPurchased": true,
+      "createdAt": "2025-09-08T09:25:00.000Z",
+      "updatedAt": "2025-09-08T09:35:00.000Z"
+    },
+    {
+      "id": "z6a7",
+      "name": "Orange Juice",
+      "quantity": 1,
+      "isPurchased": true,
+      "createdAt": "2025-09-08T09:30:00.000Z",
+      "updatedAt": "2025-09-08T09:40:00.000Z"
+    },
+    {
+      "id": "b8c9",
+      "name": "Ground Turkey",
+      "quantity": 1,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T09:35:00.000Z",
+      "updatedAt": "2025-09-08T09:35:00.000Z"
+    },
+    {
+      "id": "d0e1",
+      "name": "Sweet Potatoes",
+      "quantity": 4,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T09:40:00.000Z",
+      "updatedAt": "2025-09-08T09:40:00.000Z"
+    },
+    {
+      "id": "f2g3",
+      "name": "Quinoa",
+      "quantity": 1,
+      "isPurchased": true,
+      "createdAt": "2025-09-08T09:45:00.000Z",
+      "updatedAt": "2025-09-08T09:45:00.000Z"
+    },
+    {
+      "id": "h4i5",
+      "name": "Dark Chocolate",
+      "quantity": 1,
+      "isPurchased": true,
+      "createdAt": "2025-09-08T09:50:00.000Z",
+      "updatedAt": "2025-09-08T09:50:00.000Z"
+    },
+    {
+      "id": "j6k7",
+      "name": "Coconut Water",
+      "quantity": 6,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T09:55:00.000Z",
+      "updatedAt": "2025-09-08T09:55:00.000Z"
+    },
+    {
+      "id": "l8m9",
+      "name": "Frozen Pizza",
+      "quantity": 2,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T10:00:00.000Z",
+      "updatedAt": "2025-09-08T10:00:00.000Z"
+    },
+    {
+      "id": "n0o1",
+      "name": "Spinach",
+      "quantity": 1,
+      "isPurchased": true,
+      "createdAt": "2025-09-08T10:05:00.000Z",
+      "updatedAt": "2025-09-08T10:05:00.000Z"
+    },
+    {
+      "id": "p2q3",
+      "name": "Salmon Fillet",
+      "quantity": 2,
+      "isPurchased": false,
+      "createdAt": "2025-09-08T10:10:00.000Z",
+      "updatedAt": "2025-09-08T10:10:00.000Z"
     }
   ]
 }
