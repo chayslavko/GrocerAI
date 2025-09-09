@@ -4,7 +4,7 @@ export const useSafeAreaPadding = () => {
   const insets = useSafeAreaInsets();
 
   return {
-    bottomNavPadding: insets.bottom + 50,
+    bottomNavPadding: insets.bottom, // + 50,
     bottomPadding: insets.bottom,
     topPadding: insets.top,
     leftPadding: insets.left,

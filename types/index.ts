@@ -10,12 +10,6 @@ export interface GroceryItem {
 export interface User {
   id: string;
   name: string;
-  email?: string;
-  preferences?: {
-    defaultCategory?: string;
-    defaultUnit?: string;
-    notifications?: boolean;
-  };
   createdAt: string;
   updatedAt: string;
 }
@@ -35,6 +29,14 @@ export interface UpdateGroceryItemData {
   name?: string;
   quantity?: number;
   isPurchased?: boolean;
+}
+
+export interface CreateUserData {
+  name: string;
+}
+
+export interface UpdateUserData {
+  name?: string;
 }
 
 export const StorageKeys = {

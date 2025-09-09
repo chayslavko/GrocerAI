@@ -16,10 +16,7 @@ import {
 } from '@gluestack-ui/themed';
 import { Input, InputField } from '@gluestack-ui/themed';
 import { GroceryItem } from '@/types';
-import {
-  useCreateGroceryItem,
-  useUpdateGroceryItem,
-} from '@/hooks/useGroceryItems';
+import { useCreateGroceryItem, useUpdateGroceryItem } from '@/hooks/useGrocery';
 
 interface GroceryItemModalProps {
   isOpen: boolean;
@@ -135,7 +132,6 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
               >
                 Amount
               </Text>
-
               <Input>
                 <InputField
                   placeholder="1"
@@ -158,7 +154,7 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
             <Button
               onPress={handleSubmit}
               isDisabled={!formData.name.trim() || isLoading}
-              className="flex-1 bg-green-500 border-green-500"
+              className="flex-1"
               bgColor="$green500"
             >
               <ButtonText color="white">{submitButtonText}</ButtonText>

@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { debounce } from 'lodash';
 import { FlatList, RefreshControl, View } from 'react-native';
 import {
   Text,
@@ -17,26 +18,50 @@ import {
   Heading,
 } from '@gluestack-ui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Colors } from '@/constants/Colors';
 import { GroceryItemCard, GroceryItemModal } from '@/components/grocery';
-import { useGroceryItems } from '@/hooks/useGroceryItems';
+import { useGroceryItems } from '@/hooks/useGrocery';
 import { GroceryItem } from '@/types';
-import { useSafeAreaPadding } from '@/hooks/useSafeAreaPadding';
 
 type ListItem =
   | { type: 'header'; title: string; count: number }
   | { type: 'item'; item: GroceryItem };
 
 export default function HomeScreen() {
-  const { bottomNavPadding, bottomPadding } = useSafeAreaPadding();
+  const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<GroceryItem | null>(null);
 
-  const { data: groceryItems = [], isLoading, refetch } = useGroceryItems();
+  const { data: grocery = [], isLoading, refetch } = useGroceryItems();
+
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((input: string) => {
+        if (input.length >= 2 || input.length === 0) {
+          setSearchQuery(input);
+        }
+      }, 300),
+    [],
+  );
+
+  const handleSearchInputChange = useCallback(
+    (input: string) => {
+      setSearchInput(input);
+      debouncedSearch(input);
+    },
+    [debouncedSearch],
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   const { pendingItems, purchasedItems } = useMemo(() => {
-    let filtered = groceryItems.filter(item => {
+    let filtered = grocery.filter(item => {
       const matchesSearch = item.name
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
@@ -58,7 +83,7 @@ export default function HomeScreen() {
       pendingItems: pending,
       purchasedItems: purchased,
     };
-  }, [groceryItems, searchQuery]);
+  }, [grocery, searchQuery]);
 
   const listData = useMemo((): ListItem[] => {
     const data: ListItem[] = [];
@@ -106,6 +131,7 @@ export default function HomeScreen() {
   }, [refetch]);
 
   const handleClearSearch = useCallback(() => {
+    setSearchInput('');
     setSearchQuery('');
   }, []);
 
@@ -176,19 +202,21 @@ export default function HomeScreen() {
   const totalItems = pendingItems.length + purchasedItems.length;
 
   return (
-    <SafeAreaView className="flex-1" edges={['top']}>
-      <View
-        className="flex-1 p-4 pb-0"
-        style={{ marginBottom: bottomNavPadding }}
-      >
+    <SafeAreaView
+      className="flex-1"
+      edges={['top']}
+      style={{
+        backgroundColor: Colors.background,
+        borderBottomColor: Colors.background,
+      }}
+    >
+      <View className="flex-1 p-4 pb-0">
         <View className="flex flex-col pb-4">
-          {/* <Text fontSize="$2xl" fontWeight="$bold" color="$gray900">
-            GrocerAI 🛒
-          </Text> */}
           <View className="flex flex-col justify-center items-center">
             <Heading size="xl" color="$gray900">
               GrocerAI 🛒
             </Heading>
+            <Text fontSize="$sm" color="$gray600"></Text>
           </View>
 
           <View className="flex flex-row items-center mt-2 h-6 justify-between">
@@ -199,16 +227,16 @@ export default function HomeScreen() {
             )}
           </View>
         </View>
-
-        {(totalItems > 0 || searchQuery.length > 0) && (
+        {(totalItems > 0 || searchInput.length > 0) && (
           <View className="flex flex-col pb-4">
-            <Input>
+            <Input borderColor="$green500" backgroundColor="$white">
               <InputField
                 placeholder="Search items..."
-                value={searchQuery}
-                onChangeText={setSearchQuery}
+                value={searchInput}
+                onChangeText={handleSearchInputChange}
+                color="$gray600"
               />
-              {searchQuery.length > 0 && (
+              {searchInput.length > 0 && (
                 <Pressable
                   onPress={handleClearSearch}
                   className="mr-2 flex justify-center "
@@ -243,7 +271,7 @@ export default function HomeScreen() {
                 <RefreshControl
                   refreshing={isLoading}
                   onRefresh={handleRefetch}
-                  tintColor="#007AFF"
+                  tintColor="#48bb78"
                 />
               }
               contentContainerStyle={{ paddingBottom: 64 }}
@@ -258,7 +286,6 @@ export default function HomeScreen() {
           bgColor="$green500"
           placement="bottom right"
           onPress={handleFabPress}
-          style={{ bottom: bottomPadding + 60 }}
         >
           <FabIcon as={AddIcon} />
         </Fab>

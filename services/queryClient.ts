@@ -38,19 +38,40 @@ export const queryClient = new QueryClient({
 });
 
 export const invalidateQueries = {
-  groceryItems: () => {
-    queryClient.invalidateQueries({ queryKey: queryKeys.groceryItems });
+  grocery: () => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.grocery });
   },
 
   groceryItem: (id: string) => {
     queryClient.invalidateQueries({ queryKey: queryKeys.groceryItem(id) });
   },
+
+  users: () => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.users });
+  },
+
+  user: (id: string) => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.user(id) });
+  },
+
+  userByName: (name: string) => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.userByName(name) });
+  },
 };
 
 export const prefetchQueries = {
-  groceryItems: async () => {
+  grocery: async () => {
     await queryClient.prefetchQuery({
-      queryKey: queryKeys.groceryItems,
+      queryKey: queryKeys.grocery,
+      queryFn: async () => {
+        return [];
+      },
+    });
+  },
+
+  users: async () => {
+    await queryClient.prefetchQuery({
+      queryKey: queryKeys.users,
       queryFn: async () => {
         return [];
       },

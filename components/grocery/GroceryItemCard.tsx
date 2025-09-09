@@ -10,10 +10,8 @@ import {
 } from '@gluestack-ui/themed';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { GroceryItem } from '@/types';
-import {
-  useTogglePurchase,
-  useDeleteGroceryItem,
-} from '@/hooks/useGroceryItems';
+import { useTogglePurchase, useDeleteGroceryItem } from '@/hooks/useGrocery';
+import { Colors } from '@/constants/Colors';
 
 interface GroceryItemCardProps {
   item: GroceryItem;
@@ -75,20 +73,20 @@ export const GroceryItemCard: React.FC<GroceryItemCardProps> = ({
             </Text>
           </View>
 
-          <View className="flex flex-row space-x-3">
+          <View className="flex flex-row">
             <TouchableOpacity
               onPress={() => onEdit(item)}
               className="p-2"
               disabled={deleteItem.isPending}
             >
-              <IconSymbol size={20} name="pencil" color="#6B7280" />
+              <IconSymbol size={20} name="pencil" color={Colors.tint} />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handleDelete}
               className="p-2"
               disabled={deleteItem.isPending}
             >
-              <IconSymbol size={20} name="trash" color="#6B7280" />
+              <IconSymbol size={20} name="trash" color={Colors.tint} />
             </TouchableOpacity>
           </View>
         </View>

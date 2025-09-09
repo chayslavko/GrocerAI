@@ -11,6 +11,7 @@ import {
 } from '@gluestack-ui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
+import { Colors } from '@/constants/Colors';
 import { useUser } from '@/hooks/useUser';
 import { useAuth } from '@/contexts/AuthContext';
 import { userStorageService } from '@/services/storage';
@@ -59,7 +60,11 @@ export default function ProfileScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1" edges={['top']}>
+    <SafeAreaView
+      className="flex-1"
+      edges={['top']}
+      style={{ backgroundColor: Colors.background }}
+    >
       <View
         className="flex-1 justify-between p-4"
         style={{ marginBottom: bottomNavPadding }}
@@ -92,15 +97,16 @@ export default function ProfileScreen() {
                   But first let me know who you are!
                 </Text>
                 <View className="mt-6">
-                  <Input>
+                  <Input borderColor="$green500" backgroundColor="$white">
                     <InputField
+                      color="$gray600"
                       placeholder="Enter your name"
                       value={name}
                       onChangeText={setName}
                     />
                   </Input>
                   <Button
-                    variant="solid"
+                    bgColor="$green500"
                     size="md"
                     className="mt-6"
                     onPress={handleSaveName}

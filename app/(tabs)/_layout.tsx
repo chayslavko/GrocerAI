@@ -1,17 +1,15 @@
 import { Tabs, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { View, Text } from '@gluestack-ui/themed';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
+
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
@@ -32,16 +30,23 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors.tint,
+        tabBarInactiveTintColor: Colors.icon,
         headerShown: false,
         tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-          },
-          default: {},
-        }),
+        tabBarBackground: () => (
+          <View
+            className="w-full h-full"
+            style={{ backgroundColor: Colors.background }}
+          />
+        ),
+        tabBarStyle: {
+          position: 'relative',
+          bottom: 0,
+          borderTopWidth: 0,
+          shadowOpacity: 0,
+          elevation: 0,
+        },
       }}
     >
       <Tabs.Screen
