@@ -3,13 +3,14 @@ export interface GroceryItem {
   name: string;
   quantity: number;
   isPurchased: boolean;
+  userId: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface User {
   id: string;
-  name: string;
+  username: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -23,6 +24,7 @@ export interface AppError {
 export interface CreateGroceryItemData {
   name: string;
   quantity: number;
+  userId: string;
 }
 
 export interface UpdateGroceryItemData {
@@ -32,16 +34,13 @@ export interface UpdateGroceryItemData {
 }
 
 export interface CreateUserData {
-  name: string;
+  username: string;
 }
 
 export interface UpdateUserData {
-  name?: string;
+  username?: string;
 }
 
 export const StorageKeys = {
   USER: '@user',
-  USER_PREFERENCES: '@user_preferences',
-  GROCERY_ITEMS: '@grocery_items',
-  OFFLINE_ACTIONS: '@offline_actions',
 } as const;

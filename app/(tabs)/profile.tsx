@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, View } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
   Text,
@@ -9,31 +11,71 @@ import {
   InputField,
   Heading,
 } from '@gluestack-ui/themed';
+import {
+  FormControl,
+  FormControlError,
+  FormControlErrorText,
+} from '@gluestack-ui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-import { useUser } from '@/hooks/useUser';
 import { useAuth } from '@/contexts/AuthContext';
-import { userStorageService } from '@/services/storage';
+import { useCreateUser } from '@/hooks/useUsers';
+import { userApi } from '@/services/api';
 import { useSafeAreaPadding } from '@/hooks/useSafeAreaPadding';
+import { usernameSchema, type UsernameFormData } from '@/schemas';
 
 export default function ProfileScreen() {
-  const [name, setName] = useState('');
-  const { user, isLoading, saveUser, clearUser } = useUser();
-  const { login, logout, isAuthenticated } = useAuth();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const { login, logout, isAuthenticated, isLoading, user } = useAuth();
+  const { mutate: createUser, isPending: isCreating } = useCreateUser();
   const { bottomNavPadding } = useSafeAreaPadding();
 
-  const handleSaveName = async () => {
-    const success = await saveUser({ name: name.trim() });
-    if (success) {
-      setName('');
-      const userData = await userStorageService.getUser();
-      if (userData) {
-        await login(userData);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm<UsernameFormData>({
+    resolver: zodResolver(usernameSchema),
+    mode: 'onChange',
+    defaultValues: {
+      username: '',
+    },
+  });
+
+  const onSubmit = async (data: UsernameFormData) => {
+    setIsLoggingIn(true);
+    const username = data.username.trim();
+
+    try {
+      const existingUser = await userApi.getByUsername(username);
+
+      if (existingUser) {
+        await login(existingUser);
+        reset();
         router.replace('/(tabs)');
+      } else {
+        createUser(
+          { username },
+          {
+            onSuccess: newUser => {
+              login(newUser);
+              reset();
+              router.replace('/(tabs)');
+            },
+            onError: error => {
+              Alert.alert('Error', 'Failed to create user. Please try again.');
+              console.error('Create user error:', error);
+            },
+          },
+        );
       }
-    } else {
-      Alert.alert('Error', 'Failed to save ur name.');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to login. Please check your connection.');
+      console.error('Login error:', error);
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -44,7 +86,6 @@ export default function ProfileScreen() {
         text: 'Yes',
         style: 'destructive',
         onPress: async () => {
-          await clearUser();
           await logout();
         },
       },
@@ -80,7 +121,7 @@ export default function ProfileScreen() {
             {user ? (
               <View className="flex flex-col">
                 <Text fontSize="$lg" color="$gray700" className="text-center">
-                  Hi, {user.name}!
+                  Hi, {user.username}!
                 </Text>
                 <Button
                   variant="outline"
@@ -92,27 +133,52 @@ export default function ProfileScreen() {
                 </Button>
               </View>
             ) : (
-              <View className="flex flex-col justify-center">
+              <View className="flex flex-col justify-center items-center">
                 <Text fontSize="$lg" color="$gray700" className="text-center">
                   But first let me know who you are!
                 </Text>
-                <View className="mt-6">
-                  <Input borderColor="$green500" backgroundColor="$white">
-                    <InputField
-                      color="$gray600"
-                      placeholder="Enter your name"
-                      value={name}
-                      onChangeText={setName}
+                <View className="mt-6 flex flex-col justify-center items-center w-full max-w-[250px] relative">
+                  <FormControl isInvalid={!!errors.username}>
+                    <Controller
+                      control={control}
+                      name="username"
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <Input
+                          borderColor={
+                            errors.username ? '$red500' : '$green500'
+                          }
+                          backgroundColor="$white"
+                          className="w-full"
+                        >
+                          <InputField
+                            color="$gray600"
+                            placeholder="Enter your username"
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            maxLength={12}
+                          />
+                        </Input>
+                      )}
                     />
-                  </Input>
+                    {errors.username && (
+                      <FormControlError className="absolute top-10 left-0 right-0 ">
+                        <FormControlErrorText>
+                          {errors.username.message}
+                        </FormControlErrorText>
+                      </FormControlError>
+                    )}
+                  </FormControl>
                   <Button
                     bgColor="$green500"
                     size="md"
-                    className="mt-6"
-                    onPress={handleSaveName}
-                    isDisabled={!name.trim()}
+                    className="mt-6 w-full max-w-[250px]"
+                    onPress={handleSubmit(onSubmit)}
+                    isDisabled={!isValid || isLoggingIn || isCreating}
                   >
-                    <ButtonText>Let's go</ButtonText>
+                    <ButtonText>
+                      {isLoggingIn || isCreating ? 'Logging in...' : "Let's go"}
+                    </ButtonText>
                   </Button>
                 </View>
               </View>

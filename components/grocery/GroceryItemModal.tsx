@@ -17,6 +17,7 @@ import {
 import { Input, InputField } from '@gluestack-ui/themed';
 import { GroceryItem } from '@/types';
 import { useCreateGroceryItem, useUpdateGroceryItem } from '@/hooks/useGrocery';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface GroceryItemModalProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
   onClose,
   item,
 }) => {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     quantity: 1,
@@ -69,9 +71,12 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
         },
       );
     } else {
-      createItem.mutate(formData, {
-        onSuccess: onClose,
-      });
+      createItem.mutate(
+        { ...formData, userId: user.id },
+        {
+          onSuccess: onClose,
+        },
+      );
     }
   };
 

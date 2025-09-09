@@ -20,7 +20,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import { GroceryItemCard, GroceryItemModal } from '@/components/grocery';
-import { useGroceryItems } from '@/hooks/useGrocery';
+import { useGroceryItemsByUser } from '@/hooks/useGrocery';
+import { useAuth } from '@/contexts/AuthContext';
 import { GroceryItem } from '@/types';
 
 type ListItem =
@@ -34,7 +35,12 @@ export default function HomeScreen() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<GroceryItem | null>(null);
 
-  const { data: grocery = [], isLoading, refetch } = useGroceryItems();
+  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
+  const {
+    data: grocery = [],
+    isLoading,
+    refetch,
+  } = useGroceryItemsByUser(user?.id);
 
   const debouncedSearch = useMemo(
     () =>
@@ -200,6 +206,24 @@ export default function HomeScreen() {
   );
 
   const totalItems = pendingItems.length + purchasedItems.length;
+
+  if (authLoading) {
+    return (
+      <SafeAreaView
+        className="flex-1"
+        edges={['top']}
+        style={{ backgroundColor: Colors.background }}
+      >
+        <View className="flex-1 justify-center items-center">
+          <Text color="$gray500">Loading...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <SafeAreaView

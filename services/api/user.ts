@@ -8,8 +8,11 @@ export const userApi = {
     return apiService.get<User>(`/users/${id}`);
   },
 
-  getByName: (name: string): Promise<User> => {
-    return apiService.get<User>(`/users/name/${encodeURIComponent(name)}`);
+  getByUsername: async (username: string): Promise<User | null> => {
+    const users = await apiService.get<User[]>(
+      `/users?username=${encodeURIComponent(username)}`,
+    );
+    return users.length > 0 ? users[0] : null;
   },
 
   create: (

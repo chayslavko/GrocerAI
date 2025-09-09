@@ -1,5 +1,5 @@
 const API_BASE_URL = __DEV__
-  ? 'http://192.168.0.105:3001'
+  ? 'http://localhost:3001'
   : 'https://api.grocerai.com';
 
 export class ApiError extends Error {

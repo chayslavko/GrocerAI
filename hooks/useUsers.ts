@@ -10,11 +10,11 @@ export const useUser = (id: string) => {
   });
 };
 
-export const useUserByName = (name: string) => {
+export const useUserByUsername = (username: string) => {
   return useQuery({
-    queryKey: queryKeys.userByName(name),
-    queryFn: () => userApi.getByName(name),
-    enabled: !!name,
+    queryKey: queryKeys.userByUsername(username),
+    queryFn: () => userApi.getByUsername(username),
+    enabled: !!username,
   });
 };
 
@@ -27,7 +27,7 @@ export const useCreateUser = () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.users });
       queryClient.invalidateQueries({ queryKey: queryKeys.user(newUser.id) });
       queryClient.invalidateQueries({
-        queryKey: queryKeys.userByName(newUser.name),
+        queryKey: queryKeys.userByUsername(newUser.username),
       });
     },
     onError: error => {
@@ -48,7 +48,7 @@ export const useUpdateUser = () => {
         queryKey: queryKeys.user(updatedUser.id),
       });
       queryClient.invalidateQueries({
-        queryKey: queryKeys.userByName(updatedUser.name),
+        queryKey: queryKeys.userByUsername(updatedUser.username),
       });
     },
     onError: error => {

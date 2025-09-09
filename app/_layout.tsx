@@ -3,15 +3,11 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-import '../global.css';
-
-import { AuthProvider } from '@/contexts/AuthContext';
-
 import { config } from '@gluestack-ui/config';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
+import { AuthProvider } from '@/contexts/AuthContext';
+import '../global.css';
 
-// Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

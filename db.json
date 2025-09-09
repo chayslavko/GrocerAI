@@ -1,76 +1,60 @@
 {
-  "grocery": [
+  "users": [
     {
-      "id": "h8i9",
-      "name": "Bananas",
-      "quantity": 6,
-      "isPurchased": true,
-      "createdAt": "2025-09-08T08:45:00.000Z",
-      "updatedAt": "2025-09-08T09:20:00.000Z"
+      "id": "ecc1",
+      "username": "Jo",
+      "createdAt": "2025-09-09T10:43:51.890Z",
+      "updatedAt": "2025-09-09T10:43:51.890Z"
     },
     {
-      "id": "j0k1",
-      "name": "Chicken Breast",
-      "quantity": 2,
-      "isPurchased": false,
-      "createdAt": "2025-09-08T08:50:00.000Z",
-      "updatedAt": "2025-09-08T08:50:00.000Z"
+      "id": "48b2",
+      "username": "Yc",
+      "createdAt": "2025-09-09T11:13:15.873Z",
+      "updatedAt": "2025-09-09T11:13:15.873Z"
     },
     {
-      "id": "l2m3",
-      "name": "Greek Yogurt",
-      "quantity": 4,
-      "isPurchased": true,
-      "createdAt": "2025-09-08T08:55:00.000Z",
-      "updatedAt": "2025-09-08T09:25:00.000Z"
-    },
+      "id": "c213",
+      "username": "Da",
+      "createdAt": "2025-09-09T11:15:00.421Z",
+      "updatedAt": "2025-09-09T11:15:00.421Z"
+    }
+  ],
+  "groceries": [
     {
-      "id": "n4o5",
-      "name": "Avocados",
-      "quantity": 4,
-      "isPurchased": false,
-      "createdAt": "2025-09-08T09:00:00.000Z",
-      "updatedAt": "2025-09-08T09:00:00.000Z"
-    },
-    {
-      "id": "r8s9",
-      "name": "Frozen Berries",
+      "id": "c881",
+      "name": "Milk",
       "quantity": 1,
+      "userId": "ecc1",
       "isPurchased": true,
-      "createdAt": "2025-09-08T09:10:00.000Z",
-      "updatedAt": "2025-09-08T09:30:00.000Z"
+      "createdAt": "2025-09-09T11:11:27.055Z",
+      "updatedAt": "2025-09-09T11:14:04.129Z"
     },
     {
-      "id": "t0u1",
-      "name": "Olive Oil",
+      "id": "a86e",
+      "name": "Apple",
       "quantity": 1,
+      "userId": "48b2",
       "isPurchased": false,
-      "createdAt": "2025-09-08T09:15:00.000Z",
-      "updatedAt": "2025-09-08T09:15:00.000Z"
+      "createdAt": "2025-09-09T11:13:21.327Z",
+      "updatedAt": "2025-09-09T11:13:21.327Z"
     },
     {
-      "id": "h4i5",
-      "name": "Dark Chocolate",
-      "quantity": 1,
-      "isPurchased": true,
-      "createdAt": "2025-09-08T09:50:00.000Z",
-      "updatedAt": "2025-09-08T09:50:00.000Z"
-    },
-    {
-      "id": "j6k7",
-      "name": "Coconut Water",
-      "quantity": 6,
-      "isPurchased": false,
-      "createdAt": "2025-09-08T09:55:00.000Z",
-      "updatedAt": "2025-09-08T09:55:00.000Z"
-    },
-    {
-      "id": "n0o1",
-      "name": "Spinach",
+      "id": "f288",
+      "name": "Apple 2",
       "quantity": 12,
+      "userId": "ecc1",
       "isPurchased": false,
-      "createdAt": "2025-09-08T10:05:00.000Z",
-      "updatedAt": "2025-09-09T07:57:04.474Z"
+      "createdAt": "2025-09-09T11:14:02.367Z",
+      "updatedAt": "2025-09-09T11:14:02.367Z"
+    },
+    {
+      "id": "a553",
+      "name": "Water",
+      "quantity": 14,
+      "userId": "48b2",
+      "isPurchased": true,
+      "createdAt": "2025-09-09T11:14:30.965Z",
+      "updatedAt": "2025-09-09T11:14:38.194Z"
     }
   ]
 }
