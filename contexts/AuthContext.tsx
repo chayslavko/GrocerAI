@@ -19,9 +19,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log('AuthProvider', { user, isLoading });
   useEffect(() => {
-    console.log('checkAuthState', { user });
     checkAuthState();
   }, []);
 

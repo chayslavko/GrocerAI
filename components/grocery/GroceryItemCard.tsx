@@ -11,7 +11,7 @@ import {
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { GroceryItem } from '@/types';
 import { useTogglePurchase, useDeleteGroceryItem } from '@/hooks/useGrocery';
-import { Colors } from '@/constants/Colors';
+import { Colors } from '@/constants/colors';
 
 interface GroceryItemCardProps {
   item: GroceryItem;

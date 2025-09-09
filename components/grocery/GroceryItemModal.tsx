@@ -71,6 +71,9 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
         },
       );
     } else {
+      if (!user?.id) {
+        throw new Error('User not authenticated');
+      }
       createItem.mutate(
         { ...formData, userId: user.id },
         {
@@ -139,14 +142,21 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
               </Text>
               <Input>
                 <InputField
-                  placeholder="1"
-                  value={formData.quantity.toString()}
-                  onChangeText={text =>
+                  value={
+                    formData.quantity === 0 ? '' : formData.quantity.toString()
+                  }
+                  onChangeText={text => {
+                    const numValue = text === '' ? 0 : parseInt(text);
                     setFormData({
                       ...formData,
-                      quantity: parseInt(text) || 1,
-                    })
-                  }
+                      quantity: numValue,
+                    });
+                  }}
+                  onBlur={() => {
+                    if (formData.quantity === 0) {
+                      setFormData({ ...formData, quantity: 1 });
+                    }
+                  }}
                   keyboardType="numeric"
                   className="text-gray-800"
                 />

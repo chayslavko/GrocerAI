@@ -6,7 +6,7 @@ import { View, Text } from '@gluestack-ui/themed';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 
-import { Colors } from '@/constants/Colors';
+import { Colors } from '@/constants/colors';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function TabLayout() {

@@ -18,7 +18,7 @@ import {
 } from '@gluestack-ui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { Colors } from '@/constants/Colors';
+import { Colors } from '@/constants/colors';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCreateUser } from '@/hooks/useUsers';
 import { userApi } from '@/services/api';

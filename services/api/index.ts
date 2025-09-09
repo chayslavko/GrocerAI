@@ -1,4 +1,4 @@
-export { ApiService, ApiError } from './ApiService';
+export { ApiService, ApiError } from './apiService';
 
 export { queryKeys } from './queryKeys';
 export { groceryApi } from './grocery';

@@ -7,7 +7,7 @@ export const useGroceryItems = (userId: string) => {
     queryKey: queryKeys.grocery,
     queryFn: groceryApi.getAll,
     enabled: !!userId,
-    staleTime: 2 * 60 * 1000, // 2 minutes
+    staleTime: 2 * 60 * 1000,
   });
 };
 
@@ -24,7 +24,7 @@ export const useGroceryItemsByUser = (userId?: string) => {
     queryKey: queryKeys.groceryByUser(userId || ''),
     queryFn: () => groceryApi.getByUserId(userId!),
     enabled: !!userId,
-    staleTime: 2 * 60 * 1000, // 2 minutes
+    staleTime: 2 * 60 * 1000,
   });
 };
 

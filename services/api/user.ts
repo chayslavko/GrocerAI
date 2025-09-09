@@ -1,4 +1,4 @@
-import ApiService from './ApiService';
+import ApiService from './apiService';
 import { User } from '@/types';
 
 const apiService = ApiService.getInstance();

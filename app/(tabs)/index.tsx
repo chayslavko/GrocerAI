@@ -18,7 +18,7 @@ import {
   Heading,
 } from '@gluestack-ui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors } from '@/constants/Colors';
+import { Colors } from '@/constants/colors';
 import { GroceryItemCard, GroceryItemModal } from '@/components/grocery';
 import { useGroceryItemsByUser } from '@/hooks/useGrocery';
 import { useAuth } from '@/contexts/AuthContext';
