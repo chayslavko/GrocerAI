@@ -55,7 +55,7 @@ export const invalidateQueries = {
   },
 
   userByName: (name: string) => {
-    queryClient.invalidateQueries({ queryKey: queryKeys.userByName(name) });
+    queryClient.invalidateQueries({ queryKey: queryKeys.userByUsername(name) });
   },
 };
 
