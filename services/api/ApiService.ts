@@ -1,5 +1,5 @@
 const API_BASE_URL = __DEV__
-  ? 'http://localhost:3001'
+  ? 'http://192.168.0.105:3001' //'http://localhost:3001'
   : 'https://api.grocerai.com';
 
 export class ApiError extends Error {
@@ -43,6 +43,9 @@ class ApiService {
     };
 
     try {
+      // test throtling
+      // await new Promise(resolve => setTimeout(resolve, 2000));
+
       const response = await fetch(url, config);
 
       if (!response.ok) {
@@ -82,6 +85,13 @@ class ApiService {
   async put<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'PUT',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+
+  async patch<T>(endpoint: string, data?: any): Promise<T> {
+    return this.request<T>(endpoint, {
+      method: 'PATCH',
       body: data ? JSON.stringify(data) : undefined,
     });
   }

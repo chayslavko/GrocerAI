@@ -1,23 +1,44 @@
 export interface GroceryItem {
   id: string;
   name: string;
-  category: string;
   quantity: number;
-  unit: string;
   isPurchased: boolean;
-  priority: 'low' | 'medium' | 'high';
-  notes?: string;
+  userId: string;
   createdAt: string;
   updatedAt: string;
-  barcode?: string;
-  imageUrl?: string;
-  estimatedPrice?: number;
+}
+
+export interface User {
+  id: string;
+  username: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface AppError {
   code: string;
   message: string;
   details?: Record<string, unknown>;
+}
+
+export interface CreateGroceryItemData {
+  name: string;
+  quantity: number;
+  userId: string;
+}
+
+export interface UpdateGroceryItemData {
+  name?: string;
+  quantity?: number;
+  isPurchased?: boolean;
+}
+
+export interface CreateUserData {
+  username: string;
+}
+
+export interface UpdateUserData {
+  username?: string;
 }
 
 export const StorageKeys = {

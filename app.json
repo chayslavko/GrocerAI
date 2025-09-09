@@ -9,14 +9,34 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.chayslavko.grocerai",
+      "appleTeamId": "JLWX232B68",
+      "statusBar": {
+        "barStyle": "dark-content",
+        "networkActivityIndicatorVisible": false
+      },
+      "icon": {
+        "dark": "./assets/images/ios-dark.png",
+        "light": "./assets/images/ios-light.png",
+        "tinted": "./assets/images/ios-tinted.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
+        "monochromeImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "statusBar": {
+        "barStyle": "dark-content"
+      },
+      "navigationBar": {
+        "visible": true,
+        "backgroundColor": "#1a1a1a",
+        "barStyle": "dark-content"
+      },
+      "package": "com.chayslavko.grocerai"
     },
     "web": {
       "bundler": "metro",
@@ -28,15 +48,25 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/splash-icon-dark.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "image": "./assets/images/splash-icon-light.png",
+            "backgroundColor": "#000000"
+          }
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d9354acd-9f3a-459d-b0e6-113215764a0f"
+      }
     }
   }
 }
