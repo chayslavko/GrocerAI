@@ -18,6 +18,7 @@ import { Input, InputField } from '@gluestack-ui/themed';
 import { GroceryItem } from '@/types';
 import { useCreateGroceryItem, useUpdateGroceryItem } from '@/hooks/useGrocery';
 import { useAuth } from '@/contexts/AuthContext';
+import { VoiceInputButton } from '@/components/VoiceInputButton';
 
 interface GroceryItemModalProps {
   isOpen: boolean;
@@ -85,6 +86,13 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
 
   const handleClose = () => {
     onClose();
+  };
+
+  const handleVoiceCommand = (command: { name: string; quantity: number }) => {
+    setFormData({
+      name: command.name,
+      quantity: command.quantity,
+    });
   };
 
   const isLoading = isEditMode ? updateItem.isPending : createItem.isPending;
@@ -162,6 +170,28 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
                 />
               </Input>
             </View>
+
+            {!isEditMode && (
+              <View className="flex flex-col pt-6">
+                <Text
+                  size="sm"
+                  fontWeight="$medium"
+                  color="$gray700"
+                  className="pb-3 text-center"
+                >
+                  AI for poor
+                </Text>
+                <View className="flex items-center">
+                  <VoiceInputButton
+                    onCommandParsed={handleVoiceCommand}
+                    disabled={isLoading}
+                  />
+                </View>
+                <Text size="xs" color="$gray500" className="pt-2 text-center">
+                  Say something like "Milk two" or "Apple one"
+                </Text>
+              </View>
+            )}
           </View>
         </ModalBody>
         <ModalFooter>
