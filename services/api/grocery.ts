@@ -1,4 +1,4 @@
-import ApiService from './apiService';
+import ApiService from './ApiService';
 import { GroceryItem } from '@/types';
 
 const apiService = ApiService.getInstance();
