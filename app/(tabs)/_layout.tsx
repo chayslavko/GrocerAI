@@ -1,6 +1,5 @@
 import { Tabs, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
-import { Platform, StyleSheet } from 'react-native';
 import { View, Text } from '@gluestack-ui/themed';
 
 import { HapticTab } from '@/components/HapticTab';

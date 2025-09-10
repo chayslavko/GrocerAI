@@ -76,8 +76,6 @@ export const useDeleteGroceryItem = () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.groceryItem(deletedId),
       });
-      // Note: We can't invalidate user-specific queries here since we don't have userId
-      // This would need to be handled at the component level if needed
     },
     onError: error => {
       console.error('Error deleting grocery item:', error);

@@ -121,6 +121,9 @@ android {
         jniLibs {
             useLegacyPackaging (findProperty('expo.useLegacyPackaging')?.toBoolean() ?: false)
         }
+        pickFirst '**/META-INF/androidx.localbroadcastmanager_localbroadcastmanager.version'
+        pickFirst '**/META-INF/androidx.core_core.version'
+        pickFirst '**/META-INF/androidx.versionedparcelable_versionedparcelable.version'
     }
     androidResources {
         ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'

@@ -41,19 +41,15 @@ export const invalidateQueries = {
   grocery: () => {
     queryClient.invalidateQueries({ queryKey: queryKeys.grocery });
   },
-
   groceryItem: (id: string) => {
     queryClient.invalidateQueries({ queryKey: queryKeys.groceryItem(id) });
   },
-
   users: () => {
     queryClient.invalidateQueries({ queryKey: queryKeys.users });
   },
-
   user: (id: string) => {
     queryClient.invalidateQueries({ queryKey: queryKeys.user(id) });
   },
-
   userByName: (name: string) => {
     queryClient.invalidateQueries({ queryKey: queryKeys.userByUsername(name) });
   },

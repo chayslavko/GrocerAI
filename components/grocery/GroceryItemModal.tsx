@@ -13,8 +13,9 @@ import {
   ButtonText,
   Text,
   Divider,
+  Input,
+  InputField,
 } from '@gluestack-ui/themed';
-import { Input, InputField } from '@gluestack-ui/themed';
 import { GroceryItem } from '@/types';
 import { useCreateGroceryItem, useUpdateGroceryItem } from '@/hooks/useGrocery';
 import { useAuth } from '@/contexts/AuthContext';
@@ -188,7 +189,8 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
                   />
                 </View>
                 <Text size="xs" color="$gray500" className="pt-2 text-center">
-                  Say something like "Milk two" or "Apple one"
+                  Say something like &ldquo;Milk two&rdquo; or &ldquo;Apple
+                  one&rdquo;
                 </Text>
               </View>
             )}

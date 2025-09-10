@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Alert, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,8 +10,6 @@ import {
   Input,
   InputField,
   Heading,
-} from '@gluestack-ui/themed';
-import {
   FormControl,
   FormControlError,
   FormControlErrorText,
@@ -27,7 +25,7 @@ import { usernameSchema, type UsernameFormData } from '@/schemas';
 
 export default function ProfileScreen() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const { login, logout, isAuthenticated, isLoading, user } = useAuth();
+  const { login, logout, isLoading, user } = useAuth();
   const { mutate: createUser, isPending: isCreating } = useCreateUser();
   const { bottomNavPadding } = useSafeAreaPadding();
 

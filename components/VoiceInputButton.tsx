@@ -102,7 +102,7 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
       {transcript && (
         <View className="bg-gray-100 rounded-lg p-3 max-w-xs">
           <Text fontSize="$sm" color="$gray700" textAlign="center">
-            "{transcript}"
+            &ldquo;{transcript}&rdquo;
           </Text>
         </View>
       )}
