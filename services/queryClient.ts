@@ -17,7 +17,7 @@ export const queryClient = new QueryClient({
         return failureCount < 3;
       },
       retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
       refetchOnReconnect: true,
       networkMode: 'offlineFirst',
     },
@@ -41,19 +41,15 @@ export const invalidateQueries = {
   grocery: () => {
     queryClient.invalidateQueries({ queryKey: queryKeys.grocery });
   },
-
   groceryItem: (id: string) => {
     queryClient.invalidateQueries({ queryKey: queryKeys.groceryItem(id) });
   },
-
   users: () => {
     queryClient.invalidateQueries({ queryKey: queryKeys.users });
   },
-
   user: (id: string) => {
     queryClient.invalidateQueries({ queryKey: queryKeys.user(id) });
   },
-
   userByName: (name: string) => {
     queryClient.invalidateQueries({ queryKey: queryKeys.userByUsername(name) });
   },

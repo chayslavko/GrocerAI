@@ -20,6 +20,10 @@
         "dark": "./assets/images/ios-dark.png",
         "light": "./assets/images/ios-light.png",
         "tinted": "./assets/images/ios-tinted.png"
+      },
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app uses the microphone to recognize voice commands for adding grocery items.",
+        "NSSpeechRecognitionUsageDescription": "This app uses speech recognition to convert voice commands into grocery items."
       }
     },
     "android": {
@@ -36,7 +40,11 @@
         "backgroundColor": "#1a1a1a",
         "barStyle": "dark-content"
       },
-      "package": "com.chayslavko.grocerai"
+      "package": "com.chayslavko.grocerai",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MICROPHONE"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -45,6 +53,7 @@
     },
     "plugins": [
       "expo-router",
+      "expo-dev-client",
       [
         "expo-splash-screen",
         {
@@ -56,6 +65,12 @@
             "image": "./assets/images/splash-icon-light.png",
             "backgroundColor": "#000000"
           }
+        }
+      ],
+      [
+        "react-native-permissions",
+        {
+          "iosPermissions": ["Microphone", "SpeechRecognition"]
         }
       ]
     ],

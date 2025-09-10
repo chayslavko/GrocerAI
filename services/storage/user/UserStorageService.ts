@@ -16,7 +16,6 @@ export class UserStorageService {
     return UserStorageService.instance;
   }
 
-  // User-specific methods
   async getUser(): Promise<User | null> {
     return this.storageService.getItem<User>(StorageKeys.USER);
   }
