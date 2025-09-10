@@ -24,6 +24,13 @@ import { useGroceryItemsByUser } from '@/hooks/useGrocery';
 import { useAuth } from '@/contexts/AuthContext';
 import { GroceryItem } from '@/types';
 
+const ITEM_HEIGHT = 80;
+const HEADER_HEIGHT = 50;
+const INITIAL_NUM_TO_RENDER = 10;
+const MAX_TO_RENDER_PER_BATCH = 8;
+const WINDOW_SIZE = 10;
+const UPDATE_CELLS_BATCHING_PERIOD = 50;
+
 type ListItem =
   | { type: 'header'; title: string; count: number }
   | { type: 'item'; item: GroceryItem };
@@ -140,6 +147,27 @@ export default function HomeScreen() {
     setSearchInput('');
     setSearchQuery('');
   }, []);
+
+  const getItemLayout = useCallback(
+    (data: ArrayLike<ListItem> | null | undefined, index: number) => {
+      if (!data || !data[index]) {
+        return { length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index };
+      }
+
+      const item = data[index];
+      const height = item.type === 'header' ? HEADER_HEIGHT : ITEM_HEIGHT;
+
+      let offset = 0;
+      for (let i = 0; i < index; i++) {
+        if (data[i]) {
+          offset += data[i]!.type === 'header' ? HEADER_HEIGHT : ITEM_HEIGHT;
+        }
+      }
+
+      return { length: height, offset, index };
+    },
+    [],
+  );
 
   const renderGroceryItem = useCallback(
     ({ item }: { item: GroceryItem }) => (
@@ -290,6 +318,12 @@ export default function HomeScreen() {
                   return `item-${item.item.id}`;
                 }
               }}
+              getItemLayout={getItemLayout}
+              removeClippedSubviews={true}
+              maxToRenderPerBatch={MAX_TO_RENDER_PER_BATCH}
+              windowSize={WINDOW_SIZE}
+              initialNumToRender={INITIAL_NUM_TO_RENDER}
+              updateCellsBatchingPeriod={UPDATE_CELLS_BATCHING_PERIOD}
               showsVerticalScrollIndicator={false}
               refreshControl={
                 <RefreshControl
@@ -299,6 +333,8 @@ export default function HomeScreen() {
                 />
               }
               contentContainerStyle={{ paddingBottom: 64 }}
+              disableVirtualization={false}
+              legacyImplementation={false}
             />
           )}
         </View>

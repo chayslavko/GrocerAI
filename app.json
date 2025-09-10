@@ -40,7 +40,11 @@
         "backgroundColor": "#1a1a1a",
         "barStyle": "dark-content"
       },
-      "package": "com.chayslavko.grocerai"
+      "package": "com.chayslavko.grocerai",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MICROPHONE"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -49,6 +53,7 @@
     },
     "plugins": [
       "expo-router",
+      "expo-dev-client",
       [
         "expo-splash-screen",
         {
@@ -60,6 +65,12 @@
             "image": "./assets/images/splash-icon-light.png",
             "backgroundColor": "#000000"
           }
+        }
+      ],
+      [
+        "react-native-permissions",
+        {
+          "iosPermissions": ["Microphone", "SpeechRecognition"]
         }
       ]
     ],

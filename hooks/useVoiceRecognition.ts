@@ -3,6 +3,7 @@ import Voice, {
   SpeechResultsEvent,
   SpeechErrorEvent,
 } from '@react-native-voice/voice';
+import { requestMicrophonePermission } from '@/services/permissions/PermissionService';
 
 interface ParsedCommand {
   name: string;
@@ -25,7 +26,7 @@ export const useVoiceRecognition = () => {
     };
 
     Voice.onSpeechResults = (e: SpeechResultsEvent) => {
-      if (e.value && e.value.length > 0) {
+      if (e.value && e.value.length > 0 && e.value[0]) {
         setTranscript(e.value[0]);
       }
     };
@@ -73,17 +74,17 @@ export const useVoiceRecognition = () => {
 
     const lastWord = words[words.length - 1];
 
-    if (numberWords[lastWord]) {
+    if (lastWord && numberWords[lastWord]) {
       quantity = numberWords[lastWord];
       name = words.slice(0, -1).join(' ');
-    } else if (!isNaN(Number(lastWord))) {
+    } else if (lastWord && !isNaN(Number(lastWord))) {
       quantity = Number(lastWord);
       name = words.slice(0, -1).join(' ');
     } else {
       let foundQuantity = false;
       for (let i = 0; i < words.length; i++) {
         const word = words[i];
-        if (numberWords[word] || !isNaN(Number(word))) {
+        if (word && (numberWords[word] || !isNaN(Number(word)))) {
           quantity = numberWords[word] || Number(word);
           name = [...words.slice(0, i), ...words.slice(i + 1)].join(' ');
           foundQuantity = true;
@@ -104,17 +105,29 @@ export const useVoiceRecognition = () => {
       setError(null);
       setTranscript('');
 
+      const permissionResult = await requestMicrophonePermission();
+      if (!permissionResult.granted) {
+        const errorMsg =
+          'Microphone permission is required for voice recognition';
+        setError(errorMsg);
+        console.warn('🎤 Voice Error:', errorMsg);
+        return;
+      }
+
       const available = await Voice.isAvailable();
       if (!available) {
-        setError('Voice recognition is not available on this device');
+        const errorMsg = 'Voice recognition is not available on this device';
+        setError(errorMsg);
+        console.warn('🎤 Voice Error:', errorMsg);
         return;
       }
 
       await Voice.start('en-US');
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : 'Failed to start listening',
-      );
+      const errorMsg =
+        err instanceof Error ? err.message : 'Failed to start listening';
+      setError(errorMsg);
+      console.warn('🎤 Voice Error:', errorMsg);
     }
   }, []);
 

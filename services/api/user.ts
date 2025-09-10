@@ -12,7 +12,7 @@ export const userApi = {
     const users = await apiService.get<User[]>(
       `/users?username=${encodeURIComponent(username)}`,
     );
-    return users.length > 0 ? users[0] : null;
+    return users.length > 0 ? users[0]! : null;
   },
 
   create: (
