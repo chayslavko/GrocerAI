@@ -19,7 +19,7 @@ import {
 } from '@gluestack-ui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
-import { GroceryItemCard, GroceryItemModal } from '@/components/grocery';
+import { GroceryItemCard, CustomGroceryItemModal } from '@/components/grocery';
 import { useGroceryItemsByUser } from '@/hooks/useGrocery';
 import { useAuth } from '@/contexts/AuthContext';
 import { GroceryItem } from '@/types';
@@ -270,8 +270,7 @@ export default function HomeScreen() {
             </Heading>
             <Text fontSize="$sm" color="$gray600"></Text>
           </View>
-
-          <View className="flex flex-row items-center mt-2 h-6 justify-between">
+          <View className="flex flex-row items-center mt-0 h-6 justify-between">
             {totalItems > 0 && (
               <Text fontSize="$sm" color="$gray600">
                 {totalItems} item{totalItems !== 1 ? 's' : ''}
@@ -299,7 +298,6 @@ export default function HomeScreen() {
             </Input>
           </View>
         )}
-
         <View className="flex-1">
           {isLoading ? (
             <View className="flex-1 justify-center items-center">
@@ -339,7 +337,6 @@ export default function HomeScreen() {
           )}
         </View>
       </View>
-
       {totalItems > 0 && (
         <Fab
           size="lg"
@@ -350,7 +347,13 @@ export default function HomeScreen() {
           <FabIcon as={AddIcon} />
         </Fab>
       )}
-      <GroceryItemModal
+      {/* TODO: wierd behavior of gluestack modal, so using custom modal */}
+      {/* <GroceryItemModal
+        isOpen={isModalOpen || !!editingItem}
+        onClose={handleModalClose}
+        item={editingItem}
+      /> */}
+      <CustomGroceryItemModal
         isOpen={isModalOpen || !!editingItem}
         onClose={handleModalClose}
         item={editingItem}
