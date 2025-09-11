@@ -1,11 +1,11 @@
-import ApiService from './ApiService';
-import { GroceryItem } from '@/types';
+import ApiService from "./ApiService";
+import { GroceryItem } from "@/types";
 
 const apiService = ApiService.getInstance();
 
 export const groceryApi = {
   getAll: (): Promise<GroceryItem[]> => {
-    return apiService.get<GroceryItem[]>('/groceries');
+    return apiService.get<GroceryItem[]>("/groceries");
   },
 
   getById: (id: string): Promise<GroceryItem> => {
@@ -14,12 +14,12 @@ export const groceryApi = {
 
   getByUserId: (userId: string): Promise<GroceryItem[]> => {
     return apiService.get<GroceryItem[]>(
-      `/groceries?userId=${encodeURIComponent(userId)}`,
+      `/groceries?userId=${encodeURIComponent(userId)}`
     );
   },
 
   create: (
-    item: Omit<GroceryItem, 'id' | 'createdAt' | 'updatedAt' | 'isPurchased'>,
+    item: Omit<GroceryItem, "id" | "createdAt" | "updatedAt" | "isPurchased">
   ): Promise<GroceryItem> => {
     const now = new Date().toISOString();
     const itemWithTimestamps = {
@@ -28,7 +28,7 @@ export const groceryApi = {
       createdAt: now,
       updatedAt: now,
     };
-    return apiService.post<GroceryItem>('/groceries', itemWithTimestamps);
+    return apiService.post<GroceryItem>("/groceries", itemWithTimestamps);
   },
 
   update: (id: string, item: Partial<GroceryItem>): Promise<GroceryItem> => {
@@ -39,7 +39,7 @@ export const groceryApi = {
     };
     return apiService.patch<GroceryItem>(
       `/groceries/${id}`,
-      itemWithUpdatedTimestamp,
+      itemWithUpdatedTimestamp
     );
   },
 

@@ -42,7 +42,7 @@ export default function HomeScreen() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<GroceryItem | null>(null);
 
-  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
+  const { isLoading: authLoading, user } = useAuth();
   const {
     data: grocery = [],
     isLoading,
@@ -249,7 +249,7 @@ export default function HomeScreen() {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!user) {
     return null;
   }
 
@@ -350,7 +350,6 @@ export default function HomeScreen() {
           <FabIcon as={AddIcon} />
         </Fab>
       )}
-
       <GroceryItemModal
         isOpen={isModalOpen || !!editingItem}
         onClose={handleModalClose}

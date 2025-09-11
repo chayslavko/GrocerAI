@@ -1,12 +1,10 @@
-import { Tabs, useRouter } from 'expo-router';
-import React, { useEffect } from 'react';
-import { View, Text } from '@gluestack-ui/themed';
-
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-
-import { Colors } from '@/constants/Colors';
-import { useAuth } from '@/contexts/AuthContext';
+import { Tabs, useRouter } from "expo-router";
+import React, { useEffect } from "react";
+import { View, Text } from "@gluestack-ui/themed";
+import { HapticTab } from "@/components/HapticTab";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import { Colors } from "@/constants/Colors";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function TabLayout() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -14,13 +12,13 @@ export default function TabLayout() {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace('/(tabs)/profile');
+      router.replace("/(tabs)/profile");
     }
   }, [isAuthenticated, isLoading, router]);
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>Loading...</Text>
       </View>
     );
@@ -40,7 +38,7 @@ export default function TabLayout() {
           />
         ),
         tabBarStyle: {
-          position: 'relative',
+          position: "relative",
           bottom: 0,
           borderTopWidth: 0,
           shadowOpacity: 0,
@@ -51,16 +49,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Groceries',
+          title: "Groceries",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="list.bullet" color={color} />
           ),
         }}
         listeners={{
-          tabPress: e => {
+          tabPress: (e) => {
             if (!isAuthenticated) {
               e.preventDefault();
-              router.push('/(tabs)/profile');
+              router.push("/(tabs)/profile");
             }
           },
         }}
@@ -68,7 +66,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: "Profile",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="person.fill" color={color} />
           ),

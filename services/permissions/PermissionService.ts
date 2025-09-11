@@ -5,12 +5,12 @@ import {
   RESULTS,
   Permission,
   PermissionStatus,
-} from 'react-native-permissions';
-import { Platform, Alert, Linking } from 'react-native';
+} from "react-native-permissions";
+import { Platform, Alert, Linking } from "react-native";
 
 export enum PermissionType {
-  MICROPHONE = 'microphone',
-  NOTIFICATIONS = 'notifications',
+  MICROPHONE = "microphone",
+  NOTIFICATIONS = "notifications",
 }
 
 export interface PermissionResult {
@@ -32,12 +32,12 @@ export class PermissionService {
       },
     };
 
-    const platform = Platform.OS as 'ios' | 'android';
+    const platform = Platform.OS as "ios" | "android";
     return platformPermissions[type][platform];
   }
 
   static async checkPermission(
-    type: PermissionType,
+    type: PermissionType
   ): Promise<PermissionResult> {
     try {
       const permission = this.getPermissionConstant(type);
@@ -49,7 +49,7 @@ export class PermissionService {
         canAskAgain: status !== RESULTS.BLOCKED,
       };
     } catch (error) {
-      console.warn('🔐 Permission Error:', error);
+      console.warn("🔐 Permission Error:", error);
 
       return {
         granted: false,
@@ -60,7 +60,7 @@ export class PermissionService {
   }
 
   static async requestPermission(
-    type: PermissionType,
+    type: PermissionType
   ): Promise<PermissionResult> {
     try {
       const permission = this.getPermissionConstant(type);
@@ -73,12 +73,12 @@ export class PermissionService {
       };
 
       console.log(
-        `🔐 Permission ${type} ${result.granted ? 'granted' : 'denied'}`,
+        `🔐 Permission ${type} ${result.granted ? "granted" : "denied"}`
       );
 
       return result;
     } catch (error) {
-      console.warn('🔐 Permission Error:', error);
+      console.warn("🔐 Permission Error:", error);
 
       return {
         granted: false,
@@ -93,20 +93,20 @@ export class PermissionService {
 
     if (!result.granted && result.canAskAgain) {
       Alert.alert(
-        'Microphone Permission Required',
-        'Voice recognition requires microphone access to understand your commands. Please allow microphone access in the next dialog.',
+        "Microphone Permission Required",
+        "Voice recognition requires microphone access to understand your commands. Please allow microphone access in the next dialog.",
         [
-          { text: 'Cancel', style: 'cancel' },
+          { text: "Cancel", style: "cancel" },
           {
-            text: 'Try Again',
+            text: "Try Again",
             onPress: () => this.requestMicrophonePermission(),
           },
-        ],
+        ]
       );
     } else if (!result.granted && !result.canAskAgain) {
       this.showSettingsAlert(
-        'Microphone Access Blocked',
-        'Voice recognition is disabled. To enable it, please go to Settings > Privacy > Microphone and allow access for this app.',
+        "Microphone Access Blocked",
+        "Voice recognition is disabled. To enable it, please go to Settings > Privacy > Microphone and allow access for this app."
       );
     }
 
@@ -115,9 +115,9 @@ export class PermissionService {
 
   private static showSettingsAlert(title: string, message: string): void {
     Alert.alert(title, message, [
-      { text: 'Cancel', style: 'cancel' },
+      { text: "Cancel", style: "cancel" },
       {
-        text: 'Open Settings',
+        text: "Open Settings",
         onPress: () => Linking.openSettings(),
       },
     ]);
@@ -125,7 +125,7 @@ export class PermissionService {
 
   static getPermissionStatusMessage(
     type: PermissionType,
-    status: PermissionStatus,
+    status: PermissionStatus
   ): string {
     const messages: Record<string, string> = {
       [RESULTS.UNAVAILABLE]: `${type} permission is not available on this device.`,
@@ -139,21 +139,21 @@ export class PermissionService {
   }
 
   static async checkMultiplePermissions(
-    types: PermissionType[],
+    types: PermissionType[]
   ): Promise<Record<PermissionType, PermissionResult>> {
     const results: Record<PermissionType, PermissionResult> = {} as any;
 
     await Promise.all(
-      types.map(async type => {
+      types.map(async (type) => {
         results[type] = await this.checkPermission(type);
-      }),
+      })
     );
 
     return results;
   }
 
   static async requestMultiplePermissions(
-    types: PermissionType[],
+    types: PermissionType[]
   ): Promise<Record<PermissionType, PermissionResult>> {
     const results: Record<PermissionType, PermissionResult> = {} as any;
 

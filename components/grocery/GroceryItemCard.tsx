@@ -1,5 +1,5 @@
-import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import React from "react";
+import { TouchableOpacity, View } from "react-native";
 import {
   Text,
   Checkbox,
@@ -7,11 +7,11 @@ import {
   CheckboxIcon,
   CheckIcon,
   Pressable,
-} from '@gluestack-ui/themed';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import { GroceryItem } from '@/types';
-import { useTogglePurchase, useDeleteGroceryItem } from '@/hooks/useGrocery';
-import { Colors } from '@/constants/Colors';
+} from "@gluestack-ui/themed";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import { GroceryItem } from "@/types";
+import { useTogglePurchase, useDeleteGroceryItem } from "@/hooks/useGrocery";
+import { Colors } from "@/constants/Colors";
 
 interface GroceryItemCardProps {
   item: GroceryItem;
@@ -52,7 +52,7 @@ export const GroceryItemCard: React.FC<GroceryItemCardProps> = ({
           >
             <CheckboxIndicator
               borderColor="$green500"
-              bgColor={item.isPurchased ? '$green500' : 'transparent'}
+              bgColor={item.isPurchased ? "$green500" : "transparent"}
             >
               <CheckboxIcon as={CheckIcon} color="white" />
             </CheckboxIndicator>
@@ -62,14 +62,14 @@ export const GroceryItemCard: React.FC<GroceryItemCardProps> = ({
             <Text
               fontSize="$lg"
               fontWeight="$bold"
-              textDecorationLine={item.isPurchased ? 'line-through' : 'none'}
-              color={item.isPurchased ? '$gray400' : '$gray800'}
+              textDecorationLine={item.isPurchased ? "line-through" : "none"}
+              color={item.isPurchased ? "$gray400" : "$gray800"}
               className="mb-1"
             >
               {item.name}
             </Text>
             <Text fontSize="$sm" color="$gray500">
-              {item.quantity} piece{item.quantity !== 1 ? 's' : ''}
+              {item.quantity} piece{item.quantity !== 1 ? "s" : ""}
             </Text>
           </View>
 

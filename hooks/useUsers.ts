@@ -1,6 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { userApi, queryKeys } from '@/services/api';
-import { CreateUserData } from '@/types';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { userApi, queryKeys } from "@/services/api";
+import { CreateUserData } from "@/types";
 
 export const useUser = (id: string) => {
   return useQuery({
@@ -23,8 +23,8 @@ export const useCreateUser = () => {
 
   return useMutation({
     mutationFn: (data: CreateUserData) => userApi.create(data),
-    onError: error => {
-      console.error('Error creating user:', error);
+    onError: (error) => {
+      console.error("Error creating user:", error);
     },
   });
 };
