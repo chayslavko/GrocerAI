@@ -39,3 +39,19 @@ Android:
 ```bash
 npm run android
 ```
+
+## Troubleshooting
+
+### Android Build Issues
+
+If you get duplicate class errors, add this to `android/gradle.properties`:
+
+```properties
+android.enableJetifier=true
+```
+
+Then clean and rebuild:
+
+```bash
+cd android && ./gradlew clean && cd .. && npm run android
+```
