@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useCallback, useEffect } from "react";
-import { debounce } from "lodash";
-import { FlatList, RefreshControl, View } from "react-native";
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { debounce } from 'lodash';
+import { FlatList, RefreshControl, View } from 'react-native';
 import {
   Text,
   Button,
@@ -16,13 +16,13 @@ import {
   CheckCircleIcon,
   ClockIcon,
   Heading,
-} from "@gluestack-ui/themed";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "@/constants/Colors";
-import { GroceryItemCard, GroceryItemModal } from "@/components/grocery";
-import { useGroceryItemsByUser } from "@/hooks/useGrocery";
-import { useAuth } from "@/contexts/AuthContext";
-import { GroceryItem } from "@/types";
+} from '@gluestack-ui/themed';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Colors } from '@/constants/Colors';
+import { GroceryItemCard, GroceryItemModal } from '@/components/grocery';
+import { useGroceryItemsByUser } from '@/hooks/useGrocery';
+import { useAuth } from '@/contexts/AuthContext';
+import { GroceryItem } from '@/types';
 
 const ITEM_HEIGHT = 80;
 const HEADER_HEIGHT = 50;
@@ -32,17 +32,17 @@ const WINDOW_SIZE = 10;
 const UPDATE_CELLS_BATCHING_PERIOD = 50;
 
 type ListItem =
-  | { type: "header"; title: string; count: number }
-  | { type: "item"; item: GroceryItem };
+  | { type: 'header'; title: string; count: number }
+  | { type: 'item'; item: GroceryItem };
 
 export default function HomeScreen() {
-  const [searchInput, setSearchInput] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchInput, setSearchInput] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<GroceryItem | null>(null);
 
-  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
+  const { isLoading: authLoading, user } = useAuth();
   const {
     data: grocery = [],
     isLoading,
@@ -56,7 +56,7 @@ export default function HomeScreen() {
           setSearchQuery(input);
         }
       }, 300),
-    []
+    [],
   );
 
   const handleSearchInputChange = useCallback(
@@ -64,7 +64,7 @@ export default function HomeScreen() {
       setSearchInput(input);
       debouncedSearch(input);
     },
-    [debouncedSearch]
+    [debouncedSearch],
   );
 
   useEffect(() => {
@@ -74,15 +74,15 @@ export default function HomeScreen() {
   }, [debouncedSearch]);
 
   const { pendingItems, purchasedItems } = useMemo(() => {
-    let filtered = grocery.filter((item) => {
+    let filtered = grocery.filter(item => {
       const matchesSearch = item.name
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
       return matchesSearch;
     });
 
-    const pending = filtered.filter((item) => !item.isPurchased);
-    const purchased = filtered.filter((item) => item.isPurchased);
+    const pending = filtered.filter(item => !item.isPurchased);
+    const purchased = filtered.filter(item => item.isPurchased);
 
     pending.sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -103,23 +103,23 @@ export default function HomeScreen() {
 
     if (pendingItems.length > 0) {
       data.push({
-        type: "header",
-        title: "To Buy",
+        type: 'header',
+        title: 'To Buy',
         count: pendingItems.length,
       });
-      pendingItems.forEach((item) => {
-        data.push({ type: "item", item });
+      pendingItems.forEach(item => {
+        data.push({ type: 'item', item });
       });
     }
 
     if (purchasedItems.length > 0) {
       data.push({
-        type: "header",
-        title: "Purchased",
+        type: 'header',
+        title: 'Purchased',
         count: purchasedItems.length,
       });
-      purchasedItems.forEach((item) => {
-        data.push({ type: "item", item });
+      purchasedItems.forEach(item => {
+        data.push({ type: 'item', item });
       });
     }
 
@@ -144,8 +144,8 @@ export default function HomeScreen() {
   }, [refetch]);
 
   const handleClearSearch = useCallback(() => {
-    setSearchInput("");
-    setSearchQuery("");
+    setSearchInput('');
+    setSearchQuery('');
   }, []);
 
   const getItemLayout = useCallback(
@@ -155,29 +155,29 @@ export default function HomeScreen() {
       }
 
       const item = data[index];
-      const height = item.type === "header" ? HEADER_HEIGHT : ITEM_HEIGHT;
+      const height = item.type === 'header' ? HEADER_HEIGHT : ITEM_HEIGHT;
 
       let offset = 0;
       for (let i = 0; i < index; i++) {
         if (data[i]) {
-          offset += data[i]!.type === "header" ? HEADER_HEIGHT : ITEM_HEIGHT;
+          offset += data[i]!.type === 'header' ? HEADER_HEIGHT : ITEM_HEIGHT;
         }
       }
 
       return { length: height, offset, index };
     },
-    []
+    [],
   );
 
   const renderGroceryItem = useCallback(
     ({ item }: { item: GroceryItem }) => (
       <GroceryItemCard item={item} onEdit={handleEditItem} />
     ),
-    [handleEditItem]
+    [handleEditItem],
   );
 
   const renderSectionHeader = useCallback((title: string, count: number) => {
-    const isPurchased = title === "Purchased";
+    const isPurchased = title === 'Purchased';
     const IconComponent = isPurchased ? CheckCircleIcon : ClockIcon;
 
     return (
@@ -195,13 +195,13 @@ export default function HomeScreen() {
 
   const renderListItem = useCallback(
     ({ item }: { item: ListItem }) => {
-      if (item.type === "header") {
+      if (item.type === 'header') {
         return renderSectionHeader(item.title, item.count);
       } else {
         return renderGroceryItem({ item: item.item });
       }
     },
-    [renderSectionHeader, renderGroceryItem]
+    [renderSectionHeader, renderGroceryItem],
   );
 
   const renderEmptyState = useCallback(
@@ -215,8 +215,8 @@ export default function HomeScreen() {
             className="mt-2"
           >
             {searchQuery
-              ? "No items match your search"
-              : "Start adding items to your grocery list"}
+              ? 'No items match your search'
+              : 'Start adding items to your grocery list'}
           </Text>
           {!searchQuery && (
             <Button
@@ -230,7 +230,7 @@ export default function HomeScreen() {
         </View>
       </View>
     ),
-    [searchQuery, handleFabPress]
+    [searchQuery, handleFabPress],
   );
 
   const totalItems = pendingItems.length + purchasedItems.length;
@@ -239,7 +239,7 @@ export default function HomeScreen() {
     return (
       <SafeAreaView
         className="flex-1"
-        edges={["top"]}
+        edges={['top']}
         style={{ backgroundColor: Colors.background }}
       >
         <View className="flex-1 justify-center items-center">
@@ -249,14 +249,14 @@ export default function HomeScreen() {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!user) {
     return null;
   }
 
   return (
     <SafeAreaView
       className="flex-1"
-      edges={["top"]}
+      edges={['top']}
       style={{
         backgroundColor: Colors.background,
         borderBottomColor: Colors.background,
@@ -274,7 +274,7 @@ export default function HomeScreen() {
           <View className="flex flex-row items-center mt-2 h-6 justify-between">
             {totalItems > 0 && (
               <Text fontSize="$sm" color="$gray600">
-                {totalItems} item{totalItems !== 1 ? "s" : ""}
+                {totalItems} item{totalItems !== 1 ? 's' : ''}
               </Text>
             )}
           </View>
@@ -312,7 +312,7 @@ export default function HomeScreen() {
               data={listData}
               renderItem={renderListItem}
               keyExtractor={(item, index) => {
-                if (item.type === "header") {
+                if (item.type === 'header') {
                   return `header-${item.title}`;
                 } else {
                   return `item-${item.item.id}`;
@@ -350,7 +350,6 @@ export default function HomeScreen() {
           <FabIcon as={AddIcon} />
         </Fab>
       )}
-
       <GroceryItemModal
         isOpen={isModalOpen || !!editingItem}
         onClose={handleModalClose}

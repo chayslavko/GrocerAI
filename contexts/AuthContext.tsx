@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { User } from "@/types";
-import { userStorageService } from "@/services/storage";
-import { userApi } from "@/services/api";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { User } from '@/types';
+import { userStorageService } from '@/services/storage';
+import { userApi } from '@/services/api';
 
 interface AuthContextType {
   user: User | null;
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setUser(dbUser);
           await userStorageService.setUser(dbUser);
         } catch (error) {
-          console.log("User not found in DB");
+          console.log('User not found in DB');
           await userStorageService.removeUser();
           setUser(null);
         }
@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         setUser(null);
       }
     } catch (error) {
-      console.error("Error checking auth state:", error);
+      console.error('Error checking auth state:', error);
       setUser(null);
     } finally {
       setIsLoading(false);
@@ -76,7 +76,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    return {
+      user: null,
+      login: () => {},
+      logout: () => {},
+      isLoading: true,
+    };
   }
   return context;
 };
