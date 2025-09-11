@@ -270,8 +270,7 @@ export default function HomeScreen() {
             </Heading>
             <Text fontSize="$sm" color="$gray600"></Text>
           </View>
-
-          <View className="flex flex-row items-center mt-2 h-6 justify-between">
+          <View className="flex flex-row items-center mt-0 h-6 justify-between">
             {totalItems > 0 && (
               <Text fontSize="$sm" color="$gray600">
                 {totalItems} item{totalItems !== 1 ? 's' : ''}
