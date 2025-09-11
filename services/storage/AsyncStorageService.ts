@@ -1,5 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StorageKeys } from '@/types';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StorageKeys } from "@/types";
 
 export class AsyncStorageService {
   private static instance: AsyncStorageService;
@@ -46,7 +46,7 @@ export class AsyncStorageService {
       await AsyncStorage.clear();
       return true;
     } catch (error) {
-      console.error('Error clearing storage', error);
+      console.error("Error clearing storage", error);
       return false;
     }
   }
@@ -55,7 +55,7 @@ export class AsyncStorageService {
     try {
       return await AsyncStorage.getAllKeys();
     } catch (error) {
-      console.error('Error getting all keys from storage', error);
+      console.error("Error getting all keys from storage", error);
       return [];
     }
   }

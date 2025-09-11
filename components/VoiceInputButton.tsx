@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { View, Pressable, Alert } from 'react-native';
-import { Text } from '@gluestack-ui/themed';
-import { useVoiceRecognition } from '@/hooks/useVoiceRecognition';
+import React, { useEffect, useRef } from "react";
+import { View, Pressable, Alert, Animated } from "react-native";
+import { Text } from "@gluestack-ui/themed";
+import { useVoiceRecognition } from "@/hooks/useVoiceRecognition";
 
 interface VoiceInputButtonProps {
   onCommandParsed: (command: { name: string; quantity: number }) => void;
@@ -24,6 +24,11 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
     clearTranscript,
   } = useVoiceRecognition();
 
+  // Animation refs for the dots
+  const dot1Anim = useRef(new Animated.Value(1)).current;
+  const dot2Anim = useRef(new Animated.Value(1)).current;
+  const dot3Anim = useRef(new Animated.Value(1)).current;
+
   useEffect(() => {
     if (onTranscriptChange) {
       onTranscriptChange(transcript);
@@ -32,9 +37,54 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Voice Recognition Error', error);
+      Alert.alert("Voice Recognition Error", error);
     }
   }, [error]);
+
+  // Animation effect for listening dots
+  useEffect(() => {
+    if (isListening) {
+      const createPulseAnimation = (
+        animValue: Animated.Value,
+        delay: number
+      ) => {
+        return Animated.loop(
+          Animated.sequence([
+            Animated.timing(animValue, {
+              toValue: 0.3,
+              duration: 600,
+              delay,
+              useNativeDriver: true,
+            }),
+            Animated.timing(animValue, {
+              toValue: 1,
+              duration: 600,
+              useNativeDriver: true,
+            }),
+          ])
+        );
+      };
+
+      const animation1 = createPulseAnimation(dot1Anim, 0);
+      const animation2 = createPulseAnimation(dot2Anim, 200);
+      const animation3 = createPulseAnimation(dot3Anim, 400);
+
+      animation1.start();
+      animation2.start();
+      animation3.start();
+
+      return () => {
+        animation1.stop();
+        animation2.stop();
+        animation3.stop();
+      };
+    } else {
+      // Reset animations when not listening
+      dot1Anim.setValue(1);
+      dot2Anim.setValue(1);
+      dot3Anim.setValue(1);
+    }
+  }, [isListening, dot1Anim, dot2Anim, dot3Anim]);
 
   const handlePress = async () => {
     if (disabled) return;
@@ -49,8 +99,8 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
           clearTranscript();
         } else {
           Alert.alert(
-            'Could not understand',
-            `Please try speaking more clearly, like "Milk two" or "Bread one"`,
+            "Could not understand",
+            `Please try speaking more clearly, like "Milk two" or "Bread one"`
           );
         }
       }
@@ -76,14 +126,14 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
           w-20 h-20 rounded-full items-center justify-center shadow-lg
           ${
             isListening
-              ? 'bg-red-500 shadow-red-200'
+              ? "bg-red-500 shadow-red-200"
               : disabled
-              ? 'bg-gray-300'
-              : 'bg-green-500 shadow-green-200'
+              ? "bg-gray-300"
+              : "bg-green-500 shadow-green-200"
           }
         `}
         style={{
-          shadowColor: isListening ? '#ef4444' : '#10b981',
+          shadowColor: isListening ? "#ef4444" : "#10b981",
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: 0.3,
           shadowRadius: 8,
@@ -91,12 +141,12 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
         }}
       >
         <Text color="$white" fontSize="$4xl">
-          {isListening ? '⏹️' : '🎤'}
+          {isListening ? "⏹️" : "🎤"}
         </Text>
       </Pressable>
 
       <Text fontSize="$sm" color="$gray600" textAlign="center" className="mt-4">
-        {isListening ? 'Listening...' : 'Tap to speak'}
+        {isListening ? "Listening..." : "Tap to speak"}
       </Text>
 
       {transcript && (
@@ -109,14 +159,17 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
 
       {isListening && (
         <View className="flex flex-row space-x-1">
-          <View className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-          <View
-            className="w-2 h-2 bg-red-500 rounded-full animate-pulse"
-            style={{ animationDelay: '0.2s' }}
+          <Animated.View
+            className="w-2 h-2 bg-red-500 rounded-full"
+            style={{ opacity: dot1Anim }}
           />
-          <View
-            className="w-2 h-2 bg-red-500 rounded-full animate-pulse"
-            style={{ animationDelay: '0.4s' }}
+          <Animated.View
+            className="w-2 h-2 bg-red-500 rounded-full"
+            style={{ opacity: dot2Anim }}
+          />
+          <Animated.View
+            className="w-2 h-2 bg-red-500 rounded-full"
+            style={{ opacity: dot3Anim }}
           />
         </View>
       )}

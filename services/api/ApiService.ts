@@ -1,16 +1,16 @@
 const API_BASE_URL = __DEV__
-  ? 'http://192.168.0.105:3001' //'http://localhost:3001'
-  : 'https://api.grocerai.com';
+  ? "http://192.168.0.105:3001" //'http://localhost:3001'
+  : "https://api.grocerai.com";
 
 export class ApiError extends Error {
   constructor(
     public status: number,
     public statusText: string,
     message?: string,
-    public data?: any,
+    public data?: any
   ) {
     super(message || statusText);
-    this.name = 'ApiError';
+    this.name = "ApiError";
   }
 }
 
@@ -31,12 +31,12 @@ class ApiService {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {},
+    options: RequestInit = {}
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     const config: RequestInit = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...options.headers,
       },
       ...options,
@@ -54,7 +54,7 @@ class ApiService {
           response.status,
           response.statusText,
           errorData.message || response.statusText,
-          errorData,
+          errorData
         );
       }
 
@@ -65,39 +65,39 @@ class ApiService {
       }
       throw new ApiError(
         0,
-        'Network Error',
-        error instanceof Error ? error.message : 'Unknown error',
+        "Network Error",
+        error instanceof Error ? error.message : "Unknown error"
       );
     }
   }
 
   async get<T>(endpoint: string): Promise<T> {
-    return this.request<T>(endpoint, { method: 'GET' });
+    return this.request<T>(endpoint, { method: "GET" });
   }
 
   async post<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
-      method: 'POST',
+      method: "POST",
       ...(data && { body: JSON.stringify(data) }),
     });
   }
 
   async put<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
-      method: 'PUT',
+      method: "PUT",
       ...(data && { body: JSON.stringify(data) }),
     });
   }
 
   async patch<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
-      method: 'PATCH',
+      method: "PATCH",
       ...(data && { body: JSON.stringify(data) }),
     });
   }
 
   async delete<T>(endpoint: string): Promise<T> {
-    return this.request<T>(endpoint, { method: 'DELETE' });
+    return this.request<T>(endpoint, { method: "DELETE" });
   }
 }
 

@@ -1,5 +1,5 @@
-import { StorageKeys, User } from '@/types';
-import AsyncStorageService from '../AsyncStorageService';
+import { StorageKeys, User } from "@/types";
+import AsyncStorageService from "../AsyncStorageService";
 
 export class UserStorageService {
   private static instance: UserStorageService;

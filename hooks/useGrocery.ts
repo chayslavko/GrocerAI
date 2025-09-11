@@ -1,10 +1,10 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { groceryApi, queryKeys } from '@/services/api';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { groceryApi, queryKeys } from "@/services/api";
 import {
   CreateGroceryItemData,
   UpdateGroceryItemData,
   GroceryItem,
-} from '@/types';
+} from "@/types";
 
 export const useGroceryItems = (userId: string) => {
   return useQuery({
@@ -24,7 +24,7 @@ export const useGroceryItem = (id: string) => {
 
 export const useGroceryItemsByUser = (userId?: string) => {
   return useQuery({
-    queryKey: queryKeys.groceryByUser(userId || ''),
+    queryKey: queryKeys.groceryByUser(userId || ""),
     queryFn: () => groceryApi.getByUserId(userId!),
     enabled: !!userId,
   });
@@ -35,15 +35,15 @@ export const useCreateGroceryItem = () => {
 
   return useMutation({
     mutationFn: (data: CreateGroceryItemData) => groceryApi.create(data),
-    onSuccess: newItem => {
+    onSuccess: (newItem) => {
       queryClient.setQueryData(
         queryKeys.groceryByUser(newItem.userId),
         (oldData: GroceryItem[] | undefined) =>
-          oldData ? [...oldData, newItem] : [newItem],
+          oldData ? [...oldData, newItem] : [newItem]
       );
     },
-    onError: error => {
-      console.error('Error creating grocery item:', error);
+    onError: (error) => {
+      console.error("Error creating grocery item:", error);
     },
   });
 };
@@ -54,17 +54,17 @@ export const useUpdateGroceryItem = () => {
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateGroceryItemData }) =>
       groceryApi.update(id, data),
-    onSuccess: updatedItem => {
+    onSuccess: (updatedItem) => {
       queryClient.setQueryData(
         queryKeys.groceryByUser(updatedItem.userId),
         (oldData: GroceryItem[] | undefined) =>
-          oldData?.map(item =>
-            item.id === updatedItem.id ? updatedItem : item,
-          ) || [],
+          oldData?.map((item) =>
+            item.id === updatedItem.id ? updatedItem : item
+          ) || []
       );
     },
-    onError: error => {
-      console.error('Error updating grocery item:', error);
+    onError: (error) => {
+      console.error("Error updating grocery item:", error);
     },
   });
 };
@@ -80,8 +80,8 @@ export const useDeleteGroceryItem = () => {
         queryKey: queryKeys.groceryItem(deletedId),
       });
     },
-    onError: error => {
-      console.error('Error deleting grocery item:', error);
+    onError: (error) => {
+      console.error("Error deleting grocery item:", error);
     },
   });
 };
@@ -92,17 +92,17 @@ export const useTogglePurchase = () => {
   return useMutation({
     mutationFn: ({ id, isPurchased }: { id: string; isPurchased: boolean }) =>
       groceryApi.update(id, { isPurchased }),
-    onSuccess: updatedItem => {
+    onSuccess: (updatedItem) => {
       queryClient.setQueryData(
         queryKeys.groceryByUser(updatedItem.userId),
         (oldData: GroceryItem[] | undefined) =>
-          oldData?.map(item =>
-            item.id === updatedItem.id ? updatedItem : item,
-          ) || [],
+          oldData?.map((item) =>
+            item.id === updatedItem.id ? updatedItem : item
+          ) || []
       );
     },
-    onError: error => {
-      console.error('Error toggling purchase status:', error);
+    onError: (error) => {
+      console.error("Error toggling purchase status:", error);
     },
   });
 };

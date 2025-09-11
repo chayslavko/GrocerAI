@@ -42,5 +42,5 @@ export interface UpdateUserData {
 }
 
 export const StorageKeys = {
-  USER: '@user',
+  USER: "@user",
 } as const;

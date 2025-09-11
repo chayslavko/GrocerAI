@@ -1,4 +1,45 @@
 {
-  "users": [],
-  "groceries": []
+  "users": [
+    {
+      "id": "28ee",
+      "username": "Yc",
+      "createdAt": "2025-09-11T15:53:31.917Z",
+      "updatedAt": "2025-09-11T15:53:31.917Z"
+    },
+    {
+      "id": "93cb",
+      "username": "Po",
+      "createdAt": "2025-09-11T16:00:32.284Z",
+      "updatedAt": "2025-09-11T16:00:32.284Z"
+    }
+  ],
+  "groceries": [
+    {
+      "id": "34c1",
+      "name": "Sdf",
+      "quantity": 1,
+      "userId": "28ee",
+      "isPurchased": true,
+      "createdAt": "2025-09-11T15:53:42.998Z",
+      "updatedAt": "2025-09-11T15:53:45.385Z"
+    },
+    {
+      "id": "c5ca",
+      "name": "Dfsdf",
+      "quantity": 4,
+      "userId": "28ee",
+      "isPurchased": false,
+      "createdAt": "2025-09-11T15:59:53.820Z",
+      "updatedAt": "2025-09-11T16:00:18.263Z"
+    },
+    {
+      "id": "37ae",
+      "name": "Fdf",
+      "quantity": 1,
+      "userId": "93cb",
+      "isPurchased": false,
+      "createdAt": "2025-09-11T16:00:39.234Z",
+      "updatedAt": "2025-09-11T16:00:39.234Z"
+    }
+  ]
 }

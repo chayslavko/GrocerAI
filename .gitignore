@@ -9,24 +9,7 @@ dist/
 web-build/
 expo-env.d.ts
 
-# Native - Build artifacts only (KEEP source folders!)
-android/build/
-android/.gradle/
-android/app/build/
-android/local.properties
-android/gradle.properties
-ios/build/
-ios/DerivedData/
-ios/Pods/
-ios/Podfile.lock
-ios/*.xcworkspace/xcuserdata/
-ios/*.xcodeproj/xcuserdata/
-ios/*.xcodeproj/project.xcworkspace/xcuserdata/
-
-# Native - Keep these files (COMMIT them):
-# ios/ - Keep the entire ios/ folder (contains Info.plist with permissions)
-# android/ - Keep the entire android/ folder (contains AndroidManifest.xml)
-
+# Native
 .kotlin/
 *.orig.*
 *.jks
@@ -47,12 +30,12 @@ yarn-error.*
 .DS_Store
 *.pem
 
-# IDE
-.idea/
-
 # local env files
 .env*.local
 
 # typescript
 *.tsbuildinfo
-.cursorrules
+
+# generated native folders
+ios/
+android/

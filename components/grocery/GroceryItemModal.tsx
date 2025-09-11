@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View } from "react-native";
 import {
   Modal,
   ModalBackdrop,
@@ -15,11 +15,11 @@ import {
   Divider,
   Input,
   InputField,
-} from '@gluestack-ui/themed';
-import { GroceryItem } from '@/types';
-import { useCreateGroceryItem, useUpdateGroceryItem } from '@/hooks/useGrocery';
-import { useAuth } from '@/contexts/AuthContext';
-import { VoiceInputButton } from '@/components/VoiceInputButton';
+} from "@gluestack-ui/themed";
+import { GroceryItem } from "@/types";
+import { useCreateGroceryItem, useUpdateGroceryItem } from "@/hooks/useGrocery";
+import { useAuth } from "@/contexts/AuthContext";
+import { VoiceInputButton } from "@/components/VoiceInputButton";
 
 interface GroceryItemModalProps {
   isOpen: boolean;
@@ -34,7 +34,7 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
 }) => {
   const { user } = useAuth();
   const [formData, setFormData] = useState({
-    name: '',
+    name: "",
     quantity: 1,
   });
 
@@ -52,7 +52,7 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
         });
       } else {
         setFormData({
-          name: '',
+          name: "",
           quantity: 1,
         });
       }
@@ -70,17 +70,17 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
         },
         {
           onSuccess: onClose,
-        },
+        }
       );
     } else {
       if (!user?.id) {
-        throw new Error('User not authenticated');
+        throw new Error("User not authenticated");
       }
       createItem.mutate(
         { ...formData, userId: user.id },
         {
           onSuccess: onClose,
-        },
+        }
       );
     }
   };
@@ -97,14 +97,14 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
   };
 
   const isLoading = isEditMode ? updateItem.isPending : createItem.isPending;
-  const title = isEditMode ? 'Edit Item' : 'Add Item';
+  const title = isEditMode ? "Edit Item" : "Add Item";
   const submitButtonText = isEditMode
     ? isLoading
-      ? 'Saving...'
-      : 'Save'
+      ? "Saving..."
+      : "Save"
     : isLoading
-    ? 'Adding...'
-    : 'Add';
+    ? "Adding..."
+    : "Add";
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} size="lg">
@@ -130,9 +130,9 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
               </Text>
               <Input className="border-green-500">
                 <InputField
-                  placeholder={isEditMode ? item?.name : 'Enter item name'}
+                  placeholder={isEditMode ? item?.name : "Enter item name"}
                   value={formData.name}
-                  onChangeText={text =>
+                  onChangeText={(text) =>
                     setFormData({ ...formData, name: text })
                   }
                   className="text-gray-800"
@@ -152,10 +152,10 @@ export const GroceryItemModal: React.FC<GroceryItemModalProps> = ({
               <Input>
                 <InputField
                   value={
-                    formData.quantity === 0 ? '' : formData.quantity.toString()
+                    formData.quantity === 0 ? "" : formData.quantity.toString()
                   }
-                  onChangeText={text => {
-                    const numValue = text === '' ? 0 : parseInt(text);
+                  onChangeText={(text) => {
+                    const numValue = text === "" ? 0 : parseInt(text);
                     setFormData({
                       ...formData,
                       quantity: numValue,

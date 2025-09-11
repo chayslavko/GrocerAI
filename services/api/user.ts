@@ -1,5 +1,5 @@
-import ApiService from './ApiService';
-import { User } from '@/types';
+import ApiService from "./ApiService";
+import { User } from "@/types";
 
 const apiService = ApiService.getInstance();
 
@@ -10,13 +10,13 @@ export const userApi = {
 
   getByUsername: async (username: string): Promise<User | null> => {
     const users = await apiService.get<User[]>(
-      `/users?username=${encodeURIComponent(username)}`,
+      `/users?username=${encodeURIComponent(username)}`
     );
     return users.length > 0 ? users[0]! : null;
   },
 
   create: (
-    user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>,
+    user: Omit<User, "id" | "createdAt" | "updatedAt">
   ): Promise<User> => {
     const now = new Date().toISOString();
     const data = {
@@ -24,7 +24,7 @@ export const userApi = {
       createdAt: now,
       updatedAt: now,
     };
-    return apiService.post<User>('/users', data);
+    return apiService.post<User>("/users", data);
   },
 
   update: (id: string, user: Partial<User>): Promise<User> => {

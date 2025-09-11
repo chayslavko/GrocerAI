@@ -1,5 +1,5 @@
-import { QueryClient } from '@tanstack/react-query';
-import { ApiError, queryKeys } from './api/';
+import { QueryClient } from "@tanstack/react-query";
+import { ApiError, queryKeys } from "./api/";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,11 +16,11 @@ export const queryClient = new QueryClient({
         }
         return failureCount < 3;
       },
-      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       refetchOnMount: false,
-      networkMode: 'offlineFirst',
+      networkMode: "offlineFirst",
     },
     mutations: {
       retry: (failureCount, error) => {
@@ -33,7 +33,7 @@ export const queryClient = new QueryClient({
         }
         return failureCount < 1;
       },
-      networkMode: 'online',
+      networkMode: "online",
     },
   },
 });

@@ -1,9 +1,9 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from "react";
 import Voice, {
   SpeechResultsEvent,
   SpeechErrorEvent,
-} from '@react-native-voice/voice';
-import { requestMicrophonePermission } from '@/services/permissions/PermissionService';
+} from "@react-native-voice/voice";
+import { requestMicrophonePermission } from "@/services/permissions/PermissionService";
 
 interface ParsedCommand {
   name: string;
@@ -12,7 +12,7 @@ interface ParsedCommand {
 
 export const useVoiceRecognition = () => {
   const [isListening, setIsListening] = useState(false);
-  const [transcript, setTranscript] = useState('');
+  const [transcript, setTranscript] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export const useVoiceRecognition = () => {
     };
 
     Voice.onSpeechError = (e: SpeechErrorEvent) => {
-      setError(e.error?.message || 'Speech recognition error');
+      setError(e.error?.message || "Speech recognition error");
       setIsListening(false);
     };
 
@@ -70,30 +70,30 @@ export const useVoiceRecognition = () => {
     };
 
     let quantity = 1;
-    let name = '';
+    let name = "";
 
     const lastWord = words[words.length - 1];
 
     if (lastWord && numberWords[lastWord]) {
       quantity = numberWords[lastWord];
-      name = words.slice(0, -1).join(' ');
+      name = words.slice(0, -1).join(" ");
     } else if (lastWord && !isNaN(Number(lastWord))) {
       quantity = Number(lastWord);
-      name = words.slice(0, -1).join(' ');
+      name = words.slice(0, -1).join(" ");
     } else {
       let foundQuantity = false;
       for (let i = 0; i < words.length; i++) {
         const word = words[i];
         if (word && (numberWords[word] || !isNaN(Number(word)))) {
           quantity = numberWords[word] || Number(word);
-          name = [...words.slice(0, i), ...words.slice(i + 1)].join(' ');
+          name = [...words.slice(0, i), ...words.slice(i + 1)].join(" ");
           foundQuantity = true;
           break;
         }
       }
 
       if (!foundQuantity) {
-        name = words.join(' ');
+        name = words.join(" ");
       }
     }
 
@@ -103,31 +103,31 @@ export const useVoiceRecognition = () => {
   const startListening = useCallback(async () => {
     try {
       setError(null);
-      setTranscript('');
+      setTranscript("");
 
       const permissionResult = await requestMicrophonePermission();
       if (!permissionResult.granted) {
         const errorMsg =
-          'Microphone permission is required for voice recognition';
+          "Microphone permission is required for voice recognition";
         setError(errorMsg);
-        console.warn('🎤 Voice Error:', errorMsg);
+        console.warn("🎤 Voice Error:", errorMsg);
         return;
       }
 
       const available = await Voice.isAvailable();
       if (!available) {
-        const errorMsg = 'Voice recognition is not available on this device';
+        const errorMsg = "Voice recognition is not available on this device";
         setError(errorMsg);
-        console.warn('🎤 Voice Error:', errorMsg);
+        console.warn("🎤 Voice Error:", errorMsg);
         return;
       }
 
-      await Voice.start('en-US');
+      await Voice.start("en-US");
     } catch (err) {
       const errorMsg =
-        err instanceof Error ? err.message : 'Failed to start listening';
+        err instanceof Error ? err.message : "Failed to start listening";
       setError(errorMsg);
-      console.warn('🎤 Voice Error:', errorMsg);
+      console.warn("🎤 Voice Error:", errorMsg);
     }
   }, []);
 
@@ -135,12 +135,12 @@ export const useVoiceRecognition = () => {
     try {
       await Voice.stop();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to stop listening');
+      setError(err instanceof Error ? err.message : "Failed to stop listening");
     }
   }, []);
 
   const clearTranscript = useCallback(() => {
-    setTranscript('');
+    setTranscript("");
     setError(null);
   }, []);
 
