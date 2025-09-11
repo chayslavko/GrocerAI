@@ -18,7 +18,8 @@ export const queryClient = new QueryClient({
       },
       retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
       refetchOnWindowFocus: false,
-      refetchOnReconnect: true,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
       networkMode: 'offlineFirst',
     },
     mutations: {
@@ -52,26 +53,6 @@ export const invalidateQueries = {
   },
   userByName: (name: string) => {
     queryClient.invalidateQueries({ queryKey: queryKeys.userByUsername(name) });
-  },
-};
-
-export const prefetchQueries = {
-  grocery: async () => {
-    await queryClient.prefetchQuery({
-      queryKey: queryKeys.grocery,
-      queryFn: async () => {
-        return [];
-      },
-    });
-  },
-
-  users: async () => {
-    await queryClient.prefetchQuery({
-      queryKey: queryKeys.users,
-      queryFn: async () => {
-        return [];
-      },
-    });
   },
 };
 
