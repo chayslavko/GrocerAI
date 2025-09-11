@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Dimensions,
+  Keyboard,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -48,13 +49,17 @@ export const CustomModal: React.FC<CustomModalProps> = ({
   };
 
   const handleBackdropPress = () => {
-    if (closeOnBackdropPress) {
-      onClose();
-    }
+    Keyboard.dismiss();
+
+    setTimeout(() => {
+      if (closeOnBackdropPress) {
+        onClose();
+      }
+    }, 100);
   };
 
-  const handleContentPress = (e: any) => {
-    e.stopPropagation();
+  const handleModalAreaPress = () => {
+    Keyboard.dismiss();
   };
 
   if (!visible) return null;
@@ -69,7 +74,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
       <TouchableWithoutFeedback onPress={handleBackdropPress}>
         <View className="absolute inset-0 bg-black/50">
           <SafeAreaView className="flex-1 justify-center items-center px-5">
-            <TouchableWithoutFeedback onPress={handleContentPress}>
+            <TouchableWithoutFeedback onPress={handleModalAreaPress}>
               <View
                 className="bg-white rounded-xl max-h-[80%] shadow-lg"
                 style={{ width: getModalWidth() }}
